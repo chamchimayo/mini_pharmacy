@@ -1,0 +1,35 @@
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class PharmacyLikes extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      PharmacyLikes.hasMany(models.Likes,{foreignKey:"pharmacyId",sourceKey:"pharmacyId"});
+    }
+  }
+  Posts.init({
+    id: {
+      primaryKey: true,
+      autoIncrement:true,
+      type: DataTypes.INTEGER,
+    },
+    pharmacyId: {
+      type:DataTypes.STRING,
+      allowNull:false
+    },
+    likes: {
+      type:DataTypes.INTEGER,
+      allowNull:false
+    },
+  }, {
+    sequelize,
+    modelName: 'PharmacyLikes',
+  });
+  return PharmacyLikes;
+};
