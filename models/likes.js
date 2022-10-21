@@ -1,8 +1,9 @@
 'use strict';
 const {
-  Model
+Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
+
   class Likes extends Model {
     /**
      * Helper method for defining associations.
@@ -10,15 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Likes.belongsTo(models.PharmacyLikes, {
-        foreignKey: "pharmacyId",
-        targetKey:"pharmacyId",
-        onDelete: "CASCADE",
-      })
+      // Likes.belongsTo(models.PharmacyLikes, {
+      //   foreignKey: "pharmacyId",
+      //   targetKey:"pharmacyId",
+      // }) 충돌로 인한 보류 
   }
+
 }
   Likes.init({
-    id: {
+    likeNum: {
       primaryKey: true,
       autoIncrement:true,
       type: DataTypes.INTEGER,
