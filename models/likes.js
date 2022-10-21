@@ -1,8 +1,9 @@
 'use strict';
 const {
-  Model
+Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
+
   class Likes extends Model {
     /**
      * Helper method for defining associations.
@@ -15,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       //   targetKey:"pharmacyId",
       // }) 충돌로 인한 보류 
   }
+
 }
   Likes.init({
     likeNum: {
