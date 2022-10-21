@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Users.init({
-    id: {
+    userNum: {
       primaryKey: true,
       autoIncrement:true,
       type: DataTypes.INTEGER,
@@ -29,14 +29,10 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:false
     },
-    hashedPw: {
+    password: {
       type:DataTypes.STRING,
       allowNull:false
     }, 
-    salt: {
-      type:DataTypes.STRING,
-      allowNull:false
-    },
     gender: {
       type: DataTypes.INTEGER,
       allowNull:true
@@ -45,10 +41,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull:true
     },
-    address:{
-      type:DataTypes.STRING,
-      allowNull:true
-    }
   }, {
     sequelize,
     modelName: 'Users',
