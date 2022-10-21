@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Reviews.belongsTo(models.Users, {
-        foreignKey: "userId",
-        targetKey:"userId",
+        foreignKey: "userNum",
+        targetKey:"userNum",
         onDelete: "CASCADE",
       })
     }
@@ -23,22 +23,22 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement:true,
       type: DataTypes.INTEGER,
     },
-    pharmacyId: {
+    pharmacyNum: {
+      type:DataTypes.STRING,
+      allowNull:false
+    },
+    userNum:{
       type:DataTypes.INTEGER,
-      allowNull:false
-    },
-    userId:{
-      type:DataTypes.STRING,
-      allowNull:false
-    },
-    imageUrl: {
-      type:DataTypes.STRING,
       allowNull:false
     },
     review: {
       type:DataTypes.STRING,
       allowNull:false
     },
+    // imageUrl: {
+    //   type:DataTypes.STRING,
+    //   allowNull:false
+    // },
 
   }, {
     sequelize,
