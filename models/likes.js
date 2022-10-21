@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   }
 }
   Likes.init({
-    likeId: {
+    id: {
       primaryKey: true,
       autoIncrement:true,
       type: DataTypes.INTEGER,
@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.INTEGER,
       allowNull:false
     },
-    postId: {
+    pharmacyId: {
       type:DataTypes.INTEGER,
       allowNull:false
     },
