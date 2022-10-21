@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=d7koc93msk&amp;submodules=geocoder"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div style="margin-top: 20px; margin-bottom: 10px; font-weight: bold;">
+        약국 지도
+    </div>
+    <div id="map" style="width:100%; height:500px">
+
+    </div>
+    <script>
+        $(document).ready(function() {   
+            let XY = getLocation();         
+            
+            //지도를 삽입할 HTML 요소 또는 HTML 요소의 id를 지정합니다.
+            var mapDiv = document.getElementById('map'); // 'map'으로 선언해도 동일
+
+            //옵션 없이 지도 객체를 생성하면 서울 시청을 중심으로 하는 16 레벨의 지도가 생성됩니다.
+            var map = new naver.maps.Map(mapDiv);
+        });
+
+        async function getLocation() {
+            let XY = new Object();
+            if(navigator.geolocation) {
+                let promise = new Promise((resolve, rejected) => {
+                    navigator.geolocation.getCurrentPosition((position) => {
+                        resolve(position);
+                    });
+                });
+
+                let position = await promise;
+                navigator.geolocation.getCurrentPosition(function(position){
+                    // position.coords.latitude 위도
+                    // position.coords.longitude 경도
+                    XY.lat = position.coords.latitude;
+                    XY.lng = position.coords.longitude;
+
+                    alert("위도" + XY.lat);
+                    alert("경도" + XY.lng);
+                });
+            }
+            return XY;
+        }
+    </script>
+</body>
+</html>
