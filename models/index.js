@@ -38,6 +38,6 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-sequelize.sync ({force:true}) // force true 시 디비 날려버리고 새로만듬.. 첫실행 후 false 로바꿔주자
+sequelize.sync ({force:false}) // force true 시 디비 날려버리고 새로만듬.. 첫실행 후 false 로바꿔주자
 
 module.exports = db;

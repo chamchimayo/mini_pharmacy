@@ -10,12 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Users.hasMany(models.Likes,{foreignKey:"userId",sourceKey:"userId"});
+      Users.hasMany(models.PharmacyLikes,{foreignKey:"userId",sourceKey:"userId"});
       Users.hasMany(models.Reviews,{foreignKey:"userId",sourceKey:"userId"});
     }
   }
   Users.init({
-    id: {
+    userNum: {
       primaryKey: true,
       autoIncrement:true,
       type: DataTypes.INTEGER,
@@ -29,14 +29,10 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:false
     },
-    hashedPw: {
+    password: {
       type:DataTypes.STRING,
       allowNull:false
     }, 
-    salt: {
-      type:DataTypes.STRING,
-      allowNull:false
-    },
     gender: {
       type: DataTypes.INTEGER,
       allowNull:true
@@ -45,10 +41,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull:true
     },
-    address:{
-      type:DataTypes.STRING,
-      allowNull:true
-    }
   }, {
     sequelize,
     modelName: 'Users',
