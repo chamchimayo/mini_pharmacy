@@ -10,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      PharmacyLikes.hasMany(models.Likes,{foreignKey:"pharmacyId",sourceKey:"pharmacyId"});
+     // PharmacyLikes.hasMany(models.Likes,{foreignKey:"pharmacyId",sourceKey:"pharmacyId"});
     }
   }
-  Posts.init({
+  PharmacyLikes.init({
     id: {
       primaryKey: true,
       autoIncrement:true,
