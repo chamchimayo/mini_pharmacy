@@ -49,7 +49,7 @@ class UsersController {
       const user = await this.usersService.loginUsers(userId,password);
 
       res.send({ // 토큰값 받기
-        token: jwt.sign({ userId: user.userId }, "my-secret-key"),
+        token: jwt.sign({ userId: user.userId }, process.env.COOKIE_NAME),
         });
     }catch(err){
       res.status(400).json({error:err.message})
@@ -61,19 +61,25 @@ class UsersController {
 
 
   updateUsers = async(req,res,next)=>{
-    try{
-      const {userId,nickname,password}=req.body;
-      await this.usersService.updateUsers(userId,nickname,password)
-      res.status(200).json('회원정보 세탁완료')
-    }catch(err){
-       res.status(400).send('입력정보 오류')
-    }
-    }
+    console.log("@@@@@@@@@@@@@@@here i am")
+
+   // try{
+      const {userNum}=req.params;
+      console.log("@@@@@@@@@@@@@@@",userNum)
+
+      const {nickname,password}=req.body;
+      console.log(nickname,password)
+      const userData = await this.usersService.updateUsers(userNum,nickname,password)
+      res.status(200).json({data:userData})
+  // }catch(err){
+    //    res.status(400).send('입력정보 오류')
+    // }
+     }
 
   deleteUsers=async(req,res,next)=>{
     try{
       const {userId,password}=req.body;
-      await this.usersService.deleteUsers(userId.password);
+      await this.usersService.deleteUsers(userId,password);
       res.status(200).json('회원정보 삭제완료')
     }catch(err){
       res.status(400).send('입력정보 오류')
