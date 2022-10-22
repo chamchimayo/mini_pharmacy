@@ -34,7 +34,7 @@ class UsersController {
         
       );
       res.status(200).send("회원가입에 성공했습니다");
-    // } catch (err) {
+    // } catch (err) { 
     //   res.status(400).send("가입 대실패");
     // }
   };
