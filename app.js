@@ -12,7 +12,7 @@ app.use(cors({
   origin: '*',
 }));
 
-app.use(express.static("public_html"));
+// app.use(express.static("public_html"));
 app.use(express.json());
 
 app.use("/", routes);
