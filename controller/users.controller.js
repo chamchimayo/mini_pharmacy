@@ -1,3 +1,6 @@
+const dotenv = require("dotenv");
+dotenv.config(`${process.env.COOKIE_NAME}`);
+
 const UsersService = require("../service/users.service");
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
@@ -49,7 +52,7 @@ class UsersController {
       const user = await this.usersService.loginUsers(userId,password);
 
       res.send({ // 토큰값 받기
-        token: jwt.sign({ userId: user.userId }, process.env.COOKIE_NAME),
+        token: jwt.sign({ userId: user.userId }, `${process.env.COOKIE_NAME}`),
         });
     }catch(err){
       res.status(400).json({error:err.message})
