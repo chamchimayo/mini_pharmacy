@@ -1,4 +1,14 @@
 const ReviewService = require('../service/reviews.services');
+const Joi = require('joi');
+
+
+//  유효성 검사
+const schema = Joi.object().keys({
+    pharmacyNum:Joi.string().min(1),
+    userNum:Joi.number().min(1),
+    imageUrl: Joi.string(),
+    review: Joi.string().min(1).messages({ "number.min": "댓글을 입력해주세요" })
+});
 
 class ReviewsController {
     constructor() {
@@ -8,7 +18,7 @@ class ReviewsController {
         try {
             // const { pharmacyNum } = req.params;
             // const { userNum } = res.locals.user;
-            const { pharmacyNum,userNum,imageUrl, review } = req.body;
+            const { pharmacyNum,userNum,imageUrl, review } = await schema.validateAsync(req.body)
 
             const createReview = await this.ReviewService.createReview(
                 pharmacyNum,
@@ -17,7 +27,7 @@ class ReviewsController {
                 review
             );
 
-            res.status(200).json({ data: createReview });
+            res.status(201).json({ data: createReview });
         } catch (err) {
             next(err);
         }
@@ -25,14 +35,14 @@ class ReviewsController {
 
     updateReview = async (req, res, next) => {
         try {
-            const { ReviewNum } = req.params;
+            const { reviewNum } = req.params;
             // const { userNum } = res.locals.user;
-            const { userNum, content } = req.body;
+            const {userNum, review } = await schema.validateAsync(req.body)          
 
             const updateReview = await this.ReviewService.updateReview(
-                ReviewNum,
+                reviewNum,
                 userNum,               
-                content
+                review
             );
 
             res.status(200).json({ data: updateReview });
@@ -43,11 +53,12 @@ class ReviewsController {
 
     deleteReview = async (req, res, next) => {
         try {
-            const { ReviewNum } = req.params;
-            const { userNum } = res.locals.user;
+            const { reviewNum } = req.params;
+            // const { userNum } = res.locals.user;
+            const { userNum } = req.body;
 
             const deleteReview = await this.ReviewService.deleteReview(
-                ReviewNum,
+                reviewNum,
                 userNum
             );
 
