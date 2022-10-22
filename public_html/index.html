@@ -19,7 +19,7 @@
     <div style="margin-top: 20px; margin-bottom: 10px; font-weight: bold">
       약국 지도
     </div>
-    <div id="map" style="width: 100%; height: 500px"></div>
+    <div id="map" style="width: 50%; height: 500px"></div>
     <script>
       $(document).ready(async function () {
         let XY = await getLocation();
@@ -39,17 +39,19 @@
             let sido = "";
             let gugun = "";
             if (sido_arr.length == 1) {
+              console.log("here comes");
               sido = sido_arr[0];
               gugun = gugun_arr[0];
             } else if (sido_arr.length > 1) {
-              sido = sido_arr[0];
-              gugun = sido_arr[1];
+              console.log("here!!!!!!!!!!!!");
+              sido = gugun_arr[0];
+              gugun = gugun_arr[1];
             }
             console.log(sido);
             console.log(gugun);
 
             $.ajax({
-              url: "/pharmacyList/",
+              url: "/pharmacyList",
               type: "GET",
               cache: false,
               dataType: "json",

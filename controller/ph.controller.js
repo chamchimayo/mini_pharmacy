@@ -6,7 +6,7 @@ class PhController {
         this.phService = new PhService();
     }
     view = async (req, res) => {        
-    const { Q0, Q1, QT, QN, ORD, pageNo, numOfRows } = req.body;
+    const { Q0, Q1, QT, QN, ORD, pageNo, numOfRows } = req.query;
 
     let list = await this.phService.api(Q0,  Q1, QT, QN, ORD, pageNo, numOfRows)
 
