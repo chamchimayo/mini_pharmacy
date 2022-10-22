@@ -1,11 +1,11 @@
-const PhService = require('../service/ph.services');
+const PhService = require('../service/pharmacy.services');
 
 
 class PhController {
     constructor() {
         this.phService = new PhService();
     }
-    view = async (req, res) => {        
+    getPharmacyList = async (req, res) => {        
     const { Q0, Q1, QT, QN, ORD, pageNo, numOfRows } = req.query;
 
     let list = await this.phService.api(Q0,  Q1, QT, QN, ORD, pageNo, numOfRows)
