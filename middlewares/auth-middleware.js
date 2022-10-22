@@ -1,3 +1,6 @@
+const dotenv = require("dotenv");
+dotenv.config(`${process.env.COOKIE_NAME}`);
+
 const jwt = require('jsonwebtoken');
 const { Users } = require("../models");
 
@@ -13,7 +16,7 @@ module.exports = async (req, res, next) => {
     }
 
    // try {
-        const { userNum } = jwt.verify(authToken, process.env.COOKIE_NAME);
+        const { userNum } = jwt.verify(authToken, `${process.env.COOKIE_NAME}`);
         
 
        await Users.findByPk(userNum).then((user) => {
