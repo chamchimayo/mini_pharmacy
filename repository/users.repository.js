@@ -29,13 +29,11 @@ class UserRepository {
     return loginUsers
   }
 
-  updateUsers = async(userId,nickname,password)=>{
-    const updateUser = await Users.update({
-      userId,
-      nickname,
-      password
-      
-    })
+  updateUsers = async(userNum,nickname,password)=>{
+    const updateUser = await Users.update({nickname,password},{where:{userNum}})
+
+      return updateUser
+     
   }
 }
 

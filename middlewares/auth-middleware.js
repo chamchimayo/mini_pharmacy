@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { Users } = require("../models");
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
     const { authorization } = req.headers;
     const [authType, authToken] = (authorization || "").split(" ");
 
@@ -12,13 +12,15 @@ module.exports = (req, res, next) => {
         return;
     }
 
-    try {
-        const { userId } = jwt.verify(authToken, process.env.COOKIE_NAME);
-        Users.findOne({where: {userId}}).then((user) => {
+   // try {
+        const { userNum } = jwt.verify(authToken, process.env.COOKIE_NAME);
+        
+
+       await Users.findByPk(userNum).then((user) => {
             res.locals.user = user;
             next();
         });
-    } catch (err) {
-        res.status(400).json({errorMessage: "로그인이 필요합니다." });
-    }
+    // } catch (err) {
+    //     res.status(400).json({errorMessage: "로그인이 필요합니다." });
+    // }
 }

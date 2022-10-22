@@ -43,17 +43,22 @@ class UserService {
       return loginUsers;
   }
 
-  updateUsers = async(userId,password,nickname,gender,age)=>{
-    const updateUsers = await this.UserRepository.updateUsers(
-      userId,
+  updateUsers = async(userNum,nickname,password)=>{
+    const User = await this.UserRepository.updateUsers(
+      userNum,
       nickname,
       password,
-      nickname,
-      gender,
-      age
+
+    
     
       )
-      return updateUsers;
+      return {
+        userNum:User.null,
+      nickname:User.nickname,
+        password:User.password,
+        createdAt:User.createdAt,
+        updatedAt:User.updatedAt
+      }
   }
 
 }
