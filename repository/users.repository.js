@@ -36,6 +36,11 @@ class UserRepository {
       return updateUser
      
   }
+
+  deleteUsers = async(userNum)=>{
+    const deleteUser = await Users.destroy({where:{userNum}})
+    return deleteUser
+  }
 }
 
 module.exports = UserRepository;
