@@ -1,34 +1,23 @@
-const PharmacyService = require("../service/pharmacy.service")
+const PhService = require('../service/pharmacy.services');
 
-class PharmacyController {
-    pharmacyService = new PharmacyService();
 
-    getPharmacyList = async (req, res, next) => {
-        let api = async () => {
-            let response = null;
-            try {
-                response = await pharmacyService.getPharmacyList();
-            } catch(e) {
-                console.log(e);
-            }
-            return response;
-        }
-        console.log("@@@@@@@@@@@@@api", api);
+class PhController {
+    constructor() {
+        this.phService = new PhService();
+    }
+    getPharmacyList = async (req, res) => {        
+    const { Q0, Q1, QT, QN, ORD, pageNo, numOfRows } = req.query;
 
-        async function insure(schema, id, id2, object) {
-            const data = await schema.findOne({ id: id2 });
-            if (!data) {
-            console.log("No database created, creating one...");
-            data = new schema(object).then((data) => data.save());
-            }
-            return data;
-            }
-            
-        api.then((response) => {
-            res.setHeader("Access-Control-Allow-Origin", "*");
-            res.json(response.data.response.body);
-        });
-    };
+    let list = await this.phService.api(Q0,  Q1, QT, QN, ORD, pageNo, numOfRows)
+
+    res.setHeader("Access-Control-Allow-Origin","*")
+    res.json(list.data.response.body)
+// list.then( (response) => {
+// res.setHeader("Access-Control-Allow-Origin","*")
+// res.json(response.data.response.body)   
+// })    
 }
 
-module.exports = PharmacyController;
+
+}
+module.exports = PhController;

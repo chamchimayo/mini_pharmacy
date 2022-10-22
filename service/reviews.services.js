@@ -14,15 +14,9 @@ class ReviewService {
             throw new Error('저장 중 오류가 발생했습니다.');
         }
     };
-    updateReview = async (ReviewNum,userNum,content) => {
+    updateReview = async (reviewNum,userNum,review) => {
 
-        const option = sequelize.query(`
-        UPDATE Reviews SET content = ${content}
-        WHERE ReviewNum = ${ReviewNum}
-        AND userId = ${userNum}
-         `)
-
-        const updateReview = await this.reviewRepository.update(option);
+        const [updateReview] = await this.reviewRepository.update(reviewNum,userNum,review);
 
         if (updateReview) {
             return '댓글 수정이 완료';
@@ -31,8 +25,8 @@ class ReviewService {
         }
     };
 
-    deleteReview = async (ReviewNum,userId) => {
-        const option = {where: {ReviewNum,userId}}
+    deleteReview = async (reviewNum,userNum) => {
+        const option = {where: {reviewNum,userNum}}
         const deleteReview = await this.reviewRepository.destroy(option);
         if (deleteReview) {
             return '댓글 파괴 완료;;';

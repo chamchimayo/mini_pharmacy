@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const authMiddleware = require("../middlewares/auth-middleware");
 
-const PharmacyController = require("../controller/pharmacy.controller");
-const pharmacyController = new PharmacyController();
+const PhController = require('../controller/pharmacy.controller');
 
-router.get("/", pharmacyController.getPharmacyList);
+const phController = new PhController();
 
-module.exports = router;
+
+router.get('/', phController.getPharmacyList)
+
+
+module.exports = router
