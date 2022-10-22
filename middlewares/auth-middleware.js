@@ -14,7 +14,7 @@ module.exports = (req, res, next) => {
 
     try {
         const { userId } = jwt.verify(authToken, process.env.COOKIE_NAME);
-        Members.findOne({where: {userId}}).then((user) => {
+        Users.findOne({where: {userId}}).then((user) => {
             res.locals.user = user;
             next();
         });
