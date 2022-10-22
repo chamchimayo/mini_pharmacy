@@ -1,3 +1,6 @@
+const dotenv = require("dotenv");
+dotenv.config(`${process.env.COOKIE_NAME}`);
+
 const express = require("express");
 const app = express();
 const axios = require("axios");
@@ -10,9 +13,9 @@ const errorHandlerMiddleware = require('./middlewares/error-handler-middleware')
 
 app.use(cors({
   origin: '*',
-}))
+}));
 
-app.use(express.static("public_html"));
+// app.use(express.static("public_html"));
 app.use(express.json());
 
 app.use("/", routes);
