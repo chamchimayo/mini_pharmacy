@@ -63,7 +63,7 @@ class UsersController {
   updateUsers = async(req,res,next)=>{
     try{
       const {userId,nickname,password}=req.body;
-      await this.UsersService.updateUsers(userId,nickname,password)
+      await this.usersService.updateUsers(userId,nickname,password)
       res.status(200).json('회원정보 세탁완료')
     }catch(err){
        res.status(400).send('입력정보 오류')
@@ -73,7 +73,7 @@ class UsersController {
   deleteUsers=async(req,res,next)=>{
     try{
       const {userId,password}=req.body;
-      await this.UsersService.deleteUsers(userId.password);
+      await this.usersService.deleteUsers(userId.password);
       res.status(200).json('회원정보 삭제완료')
     }catch(err){
       res.status(400).send('입력정보 오류')
