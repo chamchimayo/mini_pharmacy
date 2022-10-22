@@ -21,7 +21,7 @@ http.listen(PORT, () => {
 
 // http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire?serviceKey=mOk9mEF6Sksn9c8fyHGP%2F9cv1uUCR2UvKS8TCxg2yFoI2szGva6EdeQ3vFApAWBCRRMjYEDKEj%2FvvXELm1geNA%3D%3D&Q0=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C&Q1=%EA%B0%95%EB%82%A8%EA%B5%AC&QT=1&QN=%EC%82%BC%EC%84%B1%EC%95%BD%EA%B5%AD&ORD=NAME&pageNo=1&numOfRows=10
 
-app.get("/pharmacyList", (req, res) => {
+app.get("/pharms", (req, res) => {
   let api = async () => {
     let response = null;
     try {
@@ -44,9 +44,11 @@ app.get("/pharmacyList", (req, res) => {
     } catch (e) {
       console.log(e);
     }
-    return response;
   };
+  return response;
+
   api().then((response) => {
+    console.log(response.data);
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.json(response.data.response.body);
   });
