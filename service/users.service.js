@@ -26,11 +26,15 @@ class UserService {
         gender,
         age
       
-      );
+      );     
      return;  
      
      
   };
+
+
+
+
     loginUsers = async(userId,password)=>{
       const loginUsers = await this.UserRepository.loginUsers(
         userId,
@@ -41,6 +45,28 @@ class UserService {
         throw new Error('닉네임 또는 패스워드를 확인해주세요.')
       }
       return loginUsers;
+  }
+
+  getUsersInfo = async(userNum,userId,nickname,password,gender,age)=>{
+    const getUsersInfo = await this.UserRepository.getUsersInfo(
+      userNum
+      //  userId,
+      //  nickname,
+      //  password,
+      //  gender,
+      //  age
+    )
+      return{
+        userNum:getUsersInfo.userNum,
+        userId:getUsersInfo.userId,
+        nickname:getUsersInfo.nickname,
+        password:getUsersInfo.password,
+        gender:getUsersInfo.gender,
+        age:getUsersInfo.age
+      }
+
+  
+      
   }
 
   updateUsers = async(userNum,nickname,password)=>{
