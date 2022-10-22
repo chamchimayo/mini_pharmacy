@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const usersRouter = require("./users");
-const pharmacyRouter = require("./pharmacy");
+const pharmacyRouter = require("./pharms");
 const reviewsRouter = require("./reviews");
 const likesRouter = require("./likes");
 
