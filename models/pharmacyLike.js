@@ -11,17 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
 
-      // PharmacyLikes.hasMany(models.Likes,{foreignKey:"pharmacyId",sourceKey:"pharmacyId"}); 충돌로 인한 보류 
+      // PharmacyLikes.hasMany(models.Likes,{foreignKey:"pharmacyNum",sourceKey:"pharmacyNum"}); 충돌로 인한 보류 
     }
   }
   PharmacyLikes.init({
     PharmacyLikeNum: {
-
       primaryKey: true,
       autoIncrement:true,
       type: DataTypes.INTEGER,
     },
-    pharmacyId: {
+    pharmacyNum: {
       type:DataTypes.STRING,
       allowNull:false
     },

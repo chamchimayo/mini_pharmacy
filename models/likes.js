@@ -11,12 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // Likes.belongsTo(models.PharmacyLikes, {
-      //   foreignKey: "pharmacyId",
-      //   targetKey:"pharmacyId",
-      // }) 충돌로 인한 보류 
+      Likes.belongsTo(models.Users, {
+        foreignKey: "userNum",
+        targetKey:"userNum",
+      }) 
   }
-
 }
   Likes.init({
     likeNum: {
@@ -24,12 +23,12 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement:true,
       type: DataTypes.INTEGER,
     },
-    userId: {
+    userNum: {
       type:DataTypes.INTEGER,
       allowNull:false
     },
-    pharmacyId: {
-      type:DataTypes.INTEGER,
+    pharmacyNum: {
+      type:DataTypes.STRING,
       allowNull:false
     },
   }, {

@@ -8,7 +8,6 @@ class UserService {
       const existsUsers = await this.UserRepository.findAllUser(nickname);
       if (existsUsers.length !== 0) {
         throw new Error("닉네임이 이미 존재합니다.");
-        return;
       }
 
       const salt = crypto.randomBytes(32).toString("base64");
