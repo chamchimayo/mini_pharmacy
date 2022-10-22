@@ -5,13 +5,13 @@ class UserService {
   UserRepository = new UserRepository();
   createUser = async (userId,nickname, password,confirmPw,gender,age) => {
   
-      const existsUsers = await this.UserRepository.findAllUser(userId);
-      if (existsUsers.length !== 0) {
+      // const existsUsers = await this.UserRepository.findAllUser(userId);
+      // if (existsUsers.length !== 0) {
 
-        throw new Error("이미 사용중인 아이디입니다.");
-        return;
+      //   throw new Error("이미 사용중인 아이디입니다.");
+      //   return;
 
-      }
+      // }
 
       // const salt = crypto.randomBytes(32).toString("base64");
       // let hashpassword = crypto
@@ -85,6 +85,10 @@ class UserService {
         createdAt:User.createdAt,
         updatedAt:User.updatedAt
       }
+  }
+  deleteUser = async (userNum)=>{
+    const deleteUsers = await this.UserRepository.deleteUsers(userNum)
+    return deleteUsers
   }
 
 }
