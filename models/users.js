@@ -35,7 +35,10 @@ module.exports = (sequelize, DataTypes) => {
     }, 
     gender: {
       type: DataTypes.INTEGER,
-      allowNull:true
+      allowNull:true,
+      // validate: {
+      //   isin: [[0, 1]]
+      // }
     },
     age:{
       type: DataTypes.INTEGER,

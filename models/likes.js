@@ -3,7 +3,6 @@ const {
 Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-
   class Likes extends Model {
     /**
      * Helper method for defining associations.
@@ -11,10 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Likes.belongsTo(models.Users, {
-        foreignKey: "userNum",
-        targetKey:"userNum",
-      }) 
+
+    //   Likes.belongsTo(models.PharmacyLikes, {
+    //     foreignKey: "pharmacyNum",
+    //     targetKey:"pharmacyNum",
+    //   });
+
   }
 }
   Likes.init({

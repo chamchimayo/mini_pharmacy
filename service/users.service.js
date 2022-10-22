@@ -3,41 +3,46 @@ const crypto = require("crypto");
 
 class UserService {
   UserRepository = new UserRepository();
-  createUser = async (nickname, password) => {
-    try {
-      const existsUsers = await this.UserRepository.findAllUser(nickname);
+  createUser = async (userId,nickname, password,confirmPw,gender,age) => {
+  
+      const existsUsers = await this.UserRepository.findAllUser(userId);
       if (existsUsers.length !== 0) {
-        throw new Error("닉네임이 이미 존재합니다.");
+
+        throw new Error("이미 사용중인 아이디입니다.");
+        return;
+
       }
 
-      const salt = crypto.randomBytes(32).toString("base64");
-      let hashpassword = crypto
-        .pbkdf2Sync(password, salt, 50, 32, "sha512")
-        .toString("base64");
-      password = hashpassword;
+      // const salt = crypto.randomBytes(32).toString("base64");
+      // let hashpassword = crypto
+      //   .pbkdf2Sync(password, salt, 50, 32, "sha512")
+      //   .toString("base64");
+      // password = hashpassword;
       const createUserData = await this.UserRepository.createUser(
+        userId,
         nickname,
         password,
-        salt,
+        confirmPw,
         gender,
-        age,
-        address
+        age
+      
       );
-      return {
-        userId: createUserData.userId,
-        nickname: createUserData.nickname,
-        password: createUserData.password,
-        createdAt: createUserData.createdAt,
-        updatedAt: createUserData.updatedAt,
-        salt: createUserData.salt,
-        gender: createUserData.gender,
-        age: createUserData.age,
-        address: createUserData.address
-      };
-    } catch (e) {
-      return res.status(400).json({ code: 400, message: e.message });
-    }
+     return;  
+     
+    
   };
+    loginUsers = async(userId,password)=>{
+      const loginUsers = await this.UserRepository.loginUsers(
+        userId,
+        password
+      )
+
+      if(!loginUsers || password !==loginUsers.password){
+        throw new Error('닉네임 또는 패스워드를 확인해주세요.')
+      }
+      return loginUsers;
+  }
+
 }
 
 

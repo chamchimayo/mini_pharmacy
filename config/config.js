@@ -10,7 +10,7 @@ const development = {
 const test = {
 'username': process.env.DB_USERNAME,
 'password': process.env.DB_PASSWORD,
-'database': "mini-project-test",
+'database': process.env.TEST_DB_NAME,
 'host' : process.env.DB_END_POINT,
 'dialect' : 'mysql'
 };

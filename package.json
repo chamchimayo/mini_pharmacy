@@ -16,7 +16,9 @@
     "joi": "^17.6.3",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.25.3"
+    "request": "^2.88.2",
+    "sequelize": "^6.25.3",
+    "xml-js": "^1.6.11"
   },
   "devDependencies": {
     "nodemon": "^2.0.20",
