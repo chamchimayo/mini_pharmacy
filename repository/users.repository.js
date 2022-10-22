@@ -4,6 +4,11 @@ class UserRepository {
   constructor(){
     this.Users = Users;
   }
+  findAllUser = async (nickname) => {
+    const users = await this.Users.findAll({where: {nickname}});
+
+    return users;
+  };
 
   createUser = async (userId, nickname, password, confirmPw,gender,age) => {
     const createUserData = await this.Users.create({
@@ -17,12 +22,6 @@ class UserRepository {
 
     return createUserData
   };
-
-  getUsersInfo = async(userNum)=>{
-    const users = await Users.findByPk(userNum);
-    return users;
-  }
-
   loginUsers = async(userId,password)=>{
     const loginUsers = await Users.findOne({
       where:{userId,password},
@@ -35,11 +34,6 @@ class UserRepository {
 
       return updateUser
      
-  }
-
-  deleteUsers = async(userNum)=>{
-    const deleteUser = await Users.destroy({where:{userNum}})
-    return deleteUser
   }
 }
 

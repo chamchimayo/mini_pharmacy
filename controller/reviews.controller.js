@@ -6,8 +6,8 @@ const Joi = require('joi');
 const schema = Joi.object().keys({
     pharmacyNum:Joi.string().min(1),
     userNum:Joi.number().min(1),
-    imageUrl: Joi.string().min(0),
-    review: Joi.string().min(1)
+    imageUrl: Joi.string(),
+    review: Joi.string().min(1).messages({ "number.min": "댓글을 입력해주세요" })
 });
 
 class ReviewsController {

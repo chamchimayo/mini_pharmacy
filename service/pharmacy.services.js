@@ -6,7 +6,7 @@ const SERVICE_KEY = "2c+Qenc7UQrjG9FeoBlJ69w3NXPIY097LOLn3sIDiTj3bRR9zW0TAcrP0fH
 
 class PhService {
 
-    findAll = async(Q0,  Q1, QT, QN, ORD, pageNo, numOfRows) => {
+    api = async(Q0,  Q1, QT, QN, ORD, pageNo, numOfRows) => {
         let response = null;
         try {
         response = await axios.get(url,{
@@ -23,26 +23,9 @@ class PhService {
         })
     } catch (err) {
         console.log(err.message)
-        next(err)
     }
     return response;                           
-}
-    findOne = async(HPID) => {
-        let response = null;
-        try {
-        response = await axios.get(url,{
-            params : {
-                "servicekey":SERVICE_KEY,
-                "HPID":HPID, // 해당 약국 정보
-                "pageNo": 1, // 페이지 갯수 
-                "numOfRows": 1 // 페이지에 띄울 최대 갯수 
-            }
-        })
-    } catch (err) {
-        console.log(err.message)
-        next(err)
-    }
-    return response;                           
-    }  
+} 
+
 }
 module.exports = PhService
