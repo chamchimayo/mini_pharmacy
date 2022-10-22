@@ -22,6 +22,21 @@ class UserRepository {
 
     return createUserData
   };
+  loginUsers = async(userId,password)=>{
+    const loginUsers = await Users.findOne({
+      where:{userId,password},
+    })
+    return loginUsers
+  }
+
+  updateUsers = async(userId,nickname,password)=>{
+    const updateUser = await Users.update({
+      userId,
+      nickname,
+      password
+      
+    })
+  }
 }
 
 module.exports = UserRepository;
