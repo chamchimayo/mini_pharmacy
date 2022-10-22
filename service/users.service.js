@@ -25,11 +25,22 @@ class UserService {
         age
       
       );
-     return;
-    
+     return;  
      
     
   };
+    loginUsers = async(userId,password)=>{
+      const loginUsers = await this.UserRepository.loginUsers(
+        userId,
+        password
+      )
+
+      if(!loginUsers || password !==loginUsers.password){
+        throw new Error('닉네임 또는 패스워드를 확인해주세요.')
+      }
+      return loginUsers;
+  }
+
 }
 
 

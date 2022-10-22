@@ -1,6 +1,7 @@
 const UsersService = require("../service/users.service");
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
+const { json } = require("sequelize");
 
 class UsersController {
   usersService = new UsersService();
@@ -40,12 +41,25 @@ class UsersController {
 
 
   loginUsers = async(req,res,next)=>{
-  const{userId,password}=req.body;
-  if(req.headers.authrization){
-    res.status(400).send('이미 로그인이 되어있습니다.');
-    return;
+    const{userId,password}=req.body;
+    if(req.headers.authrization){
+      res.status(400).send('이미 로그인이 되어있습니다.');
+      return;
+    }try{
+      const user = await this.usersService.loginUsers(userId,password);
+
+      res.send({ // 토큰값 받기
+        token: jwt.sign({ userId: user.userId }, "my-secret-key"),
+        });
+    }catch(err){
+      res.status(400).json({error:err.message})
+    }
   }
-  }
+
+
+
+
+
   updateUsers = async(req,res,next)=>{
     try{
       const {userId,nickname,password}=req.body;
