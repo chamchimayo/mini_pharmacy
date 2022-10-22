@@ -38,18 +38,20 @@
 
             let sido = "";
             let gugun = "";
-            if (sido_arr.length == 1) {
+            if (sido_arr.length == 0) {
+              console.log("here comes");
               sido = sido_arr[0];
               gugun = gugun_arr[0];
-            } else if (sido_arr.length > 1) {
-              sido = sido_arr[0];
-              gugun = sido_arr[1];
+            } else if (sido_arr.length > 0) {
+              console.log("here!!!!!!!!!!!!");
+              sido = gugun_arr[0];
+              gugun = gugun_arr[1];
             }
             console.log(sido);
             console.log(gugun);
 
             $.ajax({
-              url: "/pharmacyList/",
+              url: "/pharmacyList",
               type: "GET",
               cache: false,
               dataType: "json",

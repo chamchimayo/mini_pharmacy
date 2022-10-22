@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 class PharmacyService {
-  getPharmacyList = async () => {
+  getPharmacyList = async (req) => {
     await axios.get(
       "http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire",
       {
