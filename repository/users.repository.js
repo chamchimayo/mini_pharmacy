@@ -28,6 +28,15 @@ class UserRepository {
     })
     return loginUsers
   }
+
+  updateUsers = async(userId,nickname,password)=>{
+    const updateUser = await Users.update({
+      userId,
+      nickname,
+      password
+      
+    })
+  }
 }
 
 module.exports = UserRepository;

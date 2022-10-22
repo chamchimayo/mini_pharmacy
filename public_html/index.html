@@ -36,11 +36,13 @@
             let gugun_arr = items[0].addrdetail.sigugun.split(" "); // 시구군
 
             if (sido_arr.length == 1) {
+              console.log("here comes");
               sido = sido_arr[0];
               gugun = gugun_arr[0];
             } else if (sido_arr.length > 1) {
-              sido = sido_arr[0];
-              gugun = sido_arr[1];
+              console.log("here!!!!!!!!!!!!");
+              sido = gugun_arr[0];
+              gugun = gugun_arr[1];
             }
 
             $.ajax({
