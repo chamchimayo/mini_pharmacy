@@ -39,14 +39,6 @@ class UsersController {
     // }
   };
 
-  getUsersInfo =async(req,res,nex)=>{
-    const {userNum}=req.params;
-    const getUser = await  this.usersService.getUsersInfo(userNum);
-    
-    res.status(200).json({getUser})
-  }
-  
-
 
   loginUsers = async(req,res,next)=>{
     const{userId,password}=req.body;
@@ -85,11 +77,15 @@ class UsersController {
      }
 
   deleteUsers=async(req,res,next)=>{
-    const {userNum}=req.params;
-    const deleteUser = await this.usersService.deleteUser(userNum);
-    res.status(200).json("회원탈퇴 성공")
-}
-}
+    try{
+      const {userId,password}=req.body;
+      await this.usersService.deleteUsers(userId,password);
+      res.status(200).json('회원정보 삭제완료')
+    }catch(err){
+      res.status(400).send('입력정보 오류')
+    }
+  }
+  }
 
 
 module.exports = UsersController;
