@@ -1,4 +1,4 @@
-const ReviewService = require('../service/reviews.services');
+const ReviewService = require('../service/reviews.service');
 const Joi = require('joi');
 
 

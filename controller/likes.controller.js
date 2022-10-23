@@ -14,6 +14,17 @@ class LikesController {
             next(err);
         }
     }
+
+    getUsersAllLikePharmacy = async (req, res, next) => {
+        // try {
+            const { userNum } =  res.locals.user;
+
+            const result = await this.likesService.getUsersAllLikePharmacy(userNum);
+            res.status(200).send(result);
+        // } catch (err) {
+        //     next(err);
+        // }
+    }
 }
 
 module.exports = LikesController;

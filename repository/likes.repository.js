@@ -1,4 +1,4 @@
-const { Likes, PharmacyLikes } = require('../models')
+const { Likes } = require('../models');
 
 class LikesRepository {
     findLikeOne = async (pharmacyNum, userNum) => {
@@ -15,6 +15,11 @@ class LikesRepository {
         await Likes.destroy({ where: {pharmacyNum, userNum} })
         return;
     };
+
+    getUsersAllLikePharmacy = async (userNum) => {
+        const result = await Likes.findAll({where: {userNum}, order: [["createdAt", "DESC"]]});
+        return result;
+    }
 }
 
 module.exports = LikesRepository;

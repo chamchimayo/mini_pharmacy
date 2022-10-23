@@ -20,7 +20,6 @@ module.exports = async (req, res, next) => {
         
         Users.findOne({where: {userId}}).then((user) => {
             res.locals.user = user;
-            console.log(res.locals.user);
             next();
         });
     } catch (err) {
