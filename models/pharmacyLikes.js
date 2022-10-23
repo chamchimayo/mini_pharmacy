@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // PharmacyLikes.hasMany(models.Likes,{foreignKey:"pharmacyNum",sourceKey:"pharmacyNum"}); 충돌로 인한 보류 
+      // PharmacyLikes.hasMany(models.Likes,{foreignKey:"pharmacyNum",sourceKey:"pharmacyNum"}); 
     }
   }
   PharmacyLikes.init({
