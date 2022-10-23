@@ -14,6 +14,7 @@ class ReviewService {
             throw new Error('저장 중 오류가 발생했습니다.');
         }
     };
+    
     updateReview = async (reviewNum,userNum,review) => {
 
         const [updateReview] = await this.reviewRepository.update(reviewNum,userNum,review);
@@ -35,4 +36,5 @@ class ReviewService {
         }
     };
 }
+
 module.exports = ReviewService;
