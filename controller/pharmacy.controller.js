@@ -1,4 +1,4 @@
-const PharmacyService = require("../service/pharmacy.services");
+const PharmacyService = require("../service/pharmacy.service");
 
 class PharmacyController {
   constructor() {
