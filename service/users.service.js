@@ -3,6 +3,10 @@ const crypto = require("crypto");
 
 class UserService {
   UserRepository = new UserRepository();
+  
+  
+  
+  
   createUser = async (userId, nickname, password, confirmPw, gender, age) => {
     // const existsUsers = await this.UserRepository.findAllUser(userId);
     // if (existsUsers.length !== 0) {
@@ -17,6 +21,11 @@ class UserService {
     //   .pbkdf2Sync(password, salt, 50, 32, "sha512")
     //   .toString("base64");
     // password = hashpassword;
+    const result = await this.UserRepository.checkUsersIdDup(userId);
+    if (result){
+      throw new Error("이미 가입된 아이디입니다.")
+     }else{
+
     const createUserData = await this.UserRepository.createUser(
       userId,
       nickname,
@@ -26,7 +35,11 @@ class UserService {
       age
     );
     return;
+     }
   };
+
+  
+
 
   loginUsers = async (userId, password) => {
     const loginUsers = await this.UserRepository.loginUsers(userId, password);
@@ -75,5 +88,6 @@ class UserService {
     return deleteUsers;
   };
 }
+
 
 module.exports = UserService;
