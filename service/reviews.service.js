@@ -1,8 +1,10 @@
-const { sequelize,Reviews } = require('../models');
+const { Reviews } = require('../models');
 const ReviewRepository = require('../repository/reviews.repository');
 
 class ReviewService {
-    reviewRepository = new ReviewRepository();
+    constructor(){
+        this.reviewRepository = new ReviewRepository;
+    }
 
     createReview = async ( pharmacyNum,userNum,imageUrl,review) => {
         const option = Reviews.build({pharmacyNum,userNum,imageUrl,review})
@@ -27,6 +29,7 @@ class ReviewService {
     };
 
     deleteReview = async (reviewNum,userNum) => {
+
         const option = {where: {reviewNum,userNum}}
         const deleteReview = await this.reviewRepository.destroy(option);
         if (deleteReview) {

@@ -39,4 +39,6 @@ class PharmacyController {
     }
   };
 }
+
 module.exports = PharmacyController;
+
