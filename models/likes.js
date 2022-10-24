@@ -10,12 +10,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-
-    //   Likes.belongsTo(models.PharmacyLikes, {
-    //     foreignKey: "pharmacyNum",
-    //     targetKey:"pharmacyNum",
-    //   });
-
+      Likes.belongsTo(models.Users, {
+        foreignKey: "userNum",
+        targetKey:"userNum",
+        onDelete: "CASCADE",
+      });
+      // Likes.belongsTo(models.PharmacyLikes, {
+      //   foreignKey: "pharmacyNum",
+      //   targetKey:"pharmacyNum",
+      // });
   }
 }
   Likes.init({

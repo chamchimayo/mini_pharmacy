@@ -70,10 +70,11 @@
                 var map = new naver.maps.Map(mapDiv, mapOptions);
 
                 data.items.item.forEach(function (item, index) {
+                  let pharmacyNum = item.hpid; // 약국 고유 넘버
                   let dutyName = item.dutyName; // 약국명
-                  let dutyAddr = item.dutyAddr; // 주소
-                  let dutyTel1 = item.dutyTel1; // 전화번호
-
+                  let dutyAddr = "주소:" + item.dutyAddr; // 주소
+                  let dutyTel1 = "전화번호:" + item.dutyTel1; // 전화번호
+                 
                   let dutyTime = "";
                   if(item.dutyTime1s && item.dutyTime1c) {
                     dutyTime += "월요일: " + item.dutyTime1s + " ~ " + item.dutyTime1c + "<br>";
@@ -110,6 +111,7 @@
                   var contentString = [
                     '<div class="iw_inner">',
                     '   <h3>'+dutyName+'</h3>',
+                    '   <p>'+pharmacyNum+'<br />',                   
                     '   <p>'+dutyAddr+'<br />',
                     '       '+dutyTel1+'<br />',
                     '       '+dutyTime,
@@ -143,7 +145,7 @@
           }
         );
       });
-
+      //123
       async function getLocation() {
         let XY = new Object();
         if (navigator.geolocation) {

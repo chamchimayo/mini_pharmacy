@@ -1,8 +1,10 @@
-const { sequelize,Reviews } = require('../models');
+const { Reviews } = require('../models');
 const ReviewRepository = require('../repository/reviews.repository');
 
 class ReviewService {
-    reviewRepository = new ReviewRepository();
+    constructor(){
+        this.reviewRepository = new ReviewRepository;
+    }
 
     createReview = async ( pharmacyNum,userNum,imageUrl,review) => {
         const option = Reviews.build({pharmacyNum,userNum,imageUrl,review})
@@ -14,6 +16,7 @@ class ReviewService {
             throw new Error('저장 중 오류가 발생했습니다.');
         }
     };
+    
     updateReview = async (reviewNum,userNum,review) => {
 
         const [updateReview] = await this.reviewRepository.update(reviewNum,userNum,review);
@@ -26,6 +29,7 @@ class ReviewService {
     };
 
     deleteReview = async (reviewNum,userNum) => {
+
         const option = {where: {reviewNum,userNum}}
         const deleteReview = await this.reviewRepository.destroy(option);
         if (deleteReview) {
@@ -35,4 +39,5 @@ class ReviewService {
         }
     };
 }
+
 module.exports = ReviewService;
