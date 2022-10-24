@@ -20,7 +20,6 @@ class PhController {
 }
 
     getPharmacyOne = async(req,res) => {
-    
         try {
             const { pharmacyNum } = req.params;
             
