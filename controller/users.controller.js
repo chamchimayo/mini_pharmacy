@@ -1,3 +1,6 @@
+const dotenv = require("dotenv");
+dotenv.config(`${process.env.COOKIE_NAME}`);
+
 const UsersService = require("../service/users.service");
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
@@ -34,18 +37,10 @@ class UsersController {
         
       );
       res.status(200).send("회원가입에 성공했습니다");
-    // } catch (err) {
+    // } catch (err) { 
     //   res.status(400).send("가입 대실패");
     // }
   };
-
-  getUsersInfo =async(req,res,nex)=>{
-    const {userNum}=req.params;
-    const getUser = await  this.usersService.getUsersInfo(userNum);
-    
-    res.status(200).json({getUser})
-  }
-  
 
 
   loginUsers = async(req,res,next)=>{
@@ -57,7 +52,7 @@ class UsersController {
       const user = await this.usersService.loginUsers(userId,password);
 
       res.send({ // 토큰값 받기
-        token: jwt.sign({ userId: user.userId }, process.env.COOKIE_NAME),
+        token: jwt.sign({ userId: user.userId }, `${process.env.COOKIE_NAME}`),
         });
     }catch(err){
       res.status(400).json({error:err.message})
@@ -93,7 +88,7 @@ class UsersController {
       res.status(400).send('입력정보 오류')
     }
   }
-}
+  }
 
 
 module.exports = UsersController;

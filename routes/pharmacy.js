@@ -1,13 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const PhController = require('../controller/pharmacy.controller');
+const PharmacyController = require('../controller/pharmacy.controller');
 
-const phController = new PhController();
+const pharmacyController = new PharmacyController();
 
 //pharmacyList
-router.get('/', phController.getPharmacyList)
-router.get('/:pharmacyNum',phController.getPharmacyOne)
-
+router.get('/', pharmacyController.getPharmacyList);
+router.get('/:pharmacyNum',pharmacyController.getPharmacyOne);
 
 module.exports = router
