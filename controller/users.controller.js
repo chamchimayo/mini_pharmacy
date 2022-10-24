@@ -9,22 +9,12 @@ const { json } = require("sequelize");
 class UsersController {
   usersService = new UsersService();
 
-  createUsers = async (req, res, next) => {
-    /**
-     *  @swagger
-     * /customers:
-     * post:
-     * tag: Members
-     *  description: 회원가입 기능입니다
-     *  response:
-     *  200:
-     * description: 회원가입이 되었습니다
-     */
+  createUsers = async (req, res, next) => {    
     if (req.headers.authorization) {
       res.status(400).send("로그인이 이미 되어있습니다");
       return;
     }
-    //try {
+    try {
     const { userId, nickname, password, confirmPw, gender, age } = req.body;
 
     const result = await this.usersService.createUser(
@@ -36,9 +26,9 @@ class UsersController {
       age
     );
     res.status(200).send("회원가입에 성공했습니다");
-    // } catch (err) {
-    //   res.status(400).send("가입 대실패");
-    // }
+    } catch (err) {
+      res.json(err.message);
+     }
   };
 
   loginUsers = async (req, res, next) => {
@@ -47,6 +37,7 @@ class UsersController {
       res.status(400).send("이미 로그인이 되어있습니다.");
       return;
     }
+
     try {
       const user = await this.usersService.loginUsers(userId, password);
 

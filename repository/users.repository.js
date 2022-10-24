@@ -5,6 +5,10 @@ class UserRepository {
     this.Users = Users;
   }
 
+  checkUsersIdDup = async (userId) => {
+    return await Users.findOne({ where: { userId } });
+  };
+
   createUser = async (userId, nickname, password, confirmPw,gender,age) => {
     const createUserData = await this.Users.create({
       userId,
@@ -17,6 +21,8 @@ class UserRepository {
 
     return createUserData
   };
+
+
 
   getUsersInfo = async(userNum)=>{
     const users = await Users.findByPk(userNum);
