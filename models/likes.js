@@ -15,10 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         targetKey:"userNum",
         onDelete: "CASCADE",
       });
-      // Likes.belongsTo(models.PharmacyLikes, {
-      //   foreignKey: "pharmacyNum",
-      //   targetKey:"pharmacyNum",
-      // });
+      Likes.belongsTo(models.PharmacyLikes, {
+        foreignKey: "pharmacyNum",
+        targetKey: "pharmacyNum",
+      });
   }
 }
   Likes.init({

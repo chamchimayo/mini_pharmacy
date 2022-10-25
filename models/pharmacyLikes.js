@@ -10,18 +10,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // PharmacyLikes.hasMany(models.Likes,{foreignKey:"pharmacyNum",sourceKey:"pharmacyNum"}); 
+      PharmacyLikes.hasMany(models.Likes,{foreignKey:"pharmacyNum", sourceKey:"pharmacyNum"});
     }
   }
   PharmacyLikes.init({
-    PharmacyLikeNum: {
-      primaryKey: true,
-      autoIncrement:true,
-      type: DataTypes.INTEGER,
-    },
     pharmacyNum: {
-      type:DataTypes.STRING,
-      allowNull:false
+      primaryKey: true,
+      type: DataTypes.STRING,
     },
     likeCount: {
       type:DataTypes.INTEGER,
