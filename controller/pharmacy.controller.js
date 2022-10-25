@@ -31,7 +31,7 @@ class PharmacyController {
       const { pharmacyNum } = req.params;
 
       let pharmacy = await this.pharmacyService.findOne(pharmacyNum);
-
+      console.log("@@@@@@@@", pharmacy.data.response);
       res.setHeader("Access-Control-Allow-Origin", "*");
       res.json(pharmacy.data.response.body.items);
     } catch (err) {

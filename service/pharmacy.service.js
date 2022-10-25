@@ -20,19 +20,18 @@ class PharmacyService {
           QN: "", // 약국 이름
           ORD: "", // 정렬 순서
           pageNo: "1", // 페이지 갯수
-          numOfRows: "30", // 페이지에 띄울 최대 갯수
+          numOfRows: "10", // 페이지에 띄울 최대 갯수
         },
       });
     } catch (err) {
       console.log(err.message);
-      next(err);
     }
     return response;
   };
   
   findOne = async (HPID) => {
     let response = null;
-    // try {
+    try {
       response = await axios.get(pharmacyDetailUrl, {
         params: {
           servicekey: SERVICE_KEY,
@@ -41,10 +40,9 @@ class PharmacyService {
           numOfRows: 10, // 페이지에 띄울 최대 갯수
         },
       });
-    // } catch (err) {
-    //   console.log(err.message);
-    //   next(err);
-    // }
+    } catch (err) {
+      console.log(err.message);
+    }
     return response;
   };
 }
