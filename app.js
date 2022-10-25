@@ -17,7 +17,6 @@ app.use(cors({
   origin: '*',
 }));
 
-
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(express.static("public_html"));
