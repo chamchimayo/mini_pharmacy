@@ -10,6 +10,7 @@ const { json } = require("sequelize");
 
 
 
+
 const userSchema = Joi.object
     ({
     userId: Joi.string().alphanum().required(),
@@ -42,7 +43,8 @@ class UsersController {
       if(password!==confirmPw){
         res.status(400).send({ errorMessage: "비밀번호가 비밀번호 확인란과 일치하지 않습니다."})    
         return;       
-      }          
+      }    
+            
       const result = await this.usersService.createUser(
         userId,
         nickname,
@@ -56,6 +58,9 @@ class UsersController {
     }  catch (err) {
       res.json(err.message);
      }
+    
+     
+
     };
 
    
