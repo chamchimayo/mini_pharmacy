@@ -26,6 +26,11 @@ class UserRepository {
 
   getUsersInfo = async(userNum)=>{
     const users = await Users.findByPk(userNum);
+    if(users.gender === 0) {
+      users.gender = '남';
+    } else if(users.gender === 1) {
+      users.gender = '여';
+    }
     return users;
   }
 
@@ -39,8 +44,7 @@ class UserRepository {
   updateUsers = async(userNum,nickname,password)=>{
     const updateUser = await Users.update({nickname,password},{where:{userNum}})
 
-      return updateUser
-     
+    return updateUser
   }
 
   deleteUsers = async(userNum)=>{

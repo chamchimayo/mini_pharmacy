@@ -10,10 +10,15 @@ const http = Http.createServer(app);
 const PORT = process.env.EXPRESS_PORT || 3000;
 const routes = require("./routes");
 const errorHandlerMiddleware = require('./middlewares/error-handler-middleware')
+const swaggerUi = require("swagger-ui-express");
+const swaggerFile = require("./swagger-output");
 
 app.use(cors({
   origin: '*',
 }));
+
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(express.static("public_html"));
 app.use(express.json());

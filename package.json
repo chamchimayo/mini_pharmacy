@@ -1,7 +1,7 @@
 {
   "name": "week6_pharmacy",
   "version": "1.0.0",
-  "description": "",
+  "description": "주말 약국(항해99 9기 E반 미니 프로젝트)의 API 명세서입니다.",
   "main": "index.js",
   "scripts": {
     "test": "jest --detectOpenHandles --forceExit"
@@ -19,6 +19,8 @@
     "mysql2": "^2.3.3",
     "request": "^2.88.2",
     "sequelize": "^6.25.3",
+    "swagger-autogen": "^2.22.0",
+    "swagger-ui-express": "^4.5.0",
     "xml-js": "^1.6.11"
   },
   "devDependencies": {

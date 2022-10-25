@@ -13,7 +13,7 @@ const { json } = require("sequelize");
 const userSchema = Joi.object
     ({
     userId: Joi.string().alphanum().required(),
-    nickname: Joi.string().alphanum().required(),
+    nickname: Joi.string().required(),
     password: Joi.string().disallow("userId").required(),    
     confirmPw: Joi.ref("password"),
     gender:Joi.number().required(),
