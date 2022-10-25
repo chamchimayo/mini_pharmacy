@@ -14,11 +14,11 @@ class PharmacyService {
           servicekey: SERVICE_KEY,
           Q0: Q0, // 시
           Q1: Q1, // 구
-          QT: QT, // 영업 시간 월~일 공휴
-          QN: QN, // 약국 이름
-          ORD: ORD, // 정렬 순서
-          pageNo: pageNo, // 페이지 갯수
-          numOfRows: numOfRows, // 페이지에 띄울 최대 갯수
+          QT: "1~8", // 영업 시간 월~일 공휴
+          QN: "", // 약국 이름
+          ORD: "", // 정렬 순서
+          pageNo: "1", // 페이지 갯수
+          numOfRows: "1000", // 페이지에 띄울 최대 갯수
         },
       });
     } catch (err) {
