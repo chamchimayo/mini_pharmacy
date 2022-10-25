@@ -7,7 +7,6 @@ const reviewController = new ReviewController();
 
 // const authMiddleware = require('../middlewares/auth-middleware'); // 인증 미들웨어
 
-
 router.route("/:pharmacyNum")
 // 댓글 작성 API
     .post(reviewController.createReview)
