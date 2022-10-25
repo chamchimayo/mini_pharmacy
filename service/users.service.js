@@ -56,7 +56,7 @@ class UserService {
       userNum: getUsersInfo.userNum,
       userId: getUsersInfo.userId,
       nickname: getUsersInfo.nickname,
-      password: getUsersInfo.password,
+      // password: getUsersInfo.password,
       gender: getUsersInfo.gender,
       age: getUsersInfo.age,
     };
