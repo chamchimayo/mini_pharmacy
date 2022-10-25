@@ -96,7 +96,7 @@
         "tags": [
           "Users"
         ],
-        "description": "",
+        "description": "회원 자신의 정보 보기 API",
         "parameters": [
           {
             "name": "userNum",
@@ -118,7 +118,7 @@
         "tags": [
           "Users"
         ],
-        "description": "",
+        "description": "회원 정보 변경 API",
         "parameters": [
           {
             "name": "userNum",
@@ -140,7 +140,7 @@
         "tags": [
           "Users"
         ],
-        "description": "",
+        "description": "회원 탈퇴 API",
         "parameters": [
           {
             "name": "userNum",
@@ -164,11 +164,11 @@
         "tags": [
           "Pharmacy"
         ],
-        "description": "",
+        "description": "현위치 기준 근처 약국 전체 조회 API",
         "parameters": [
           {
             "name": "query",
-            "in": "header",
+            "in": "body",
             "required": true,
             "schema": {
               "type": "object",
@@ -206,7 +206,7 @@
         "tags": [
           "Pharmacy"
         ],
-        "description": "",
+        "description": "약국 상세 조회 API",
         "parameters": [],
         "responses": {}
       }
@@ -216,25 +216,25 @@
         "tags": [
           "Reviews"
         ],
-        "description": "",
+        "description": "약국 리뷰 남기기 API",
         "parameters": [],
         "responses": {}
       }
+    },
+    "patch": {
+      "tags": [
+        "Reviews"
+      ],
+      "description": "약국 리뷰 수정 API",
+      "parameters": [],
+      "responses": {}
     },
     "/reviews/{reviewNum}": {
       "delete": {
         "tags": [
           "Reviews"
         ],
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      },
-      "patch": {
-        "tags": [
-          "Reviews"
-        ],
-        "description": "",
+        "description": "약국 리뷰 삭제 API",
         "parameters": [],
         "responses": {}
       }
@@ -244,7 +244,7 @@
         "tags": [
           "Likes"
         ],
-        "description": "",
+        "description": "약국 좋아요 API",
         "parameters": [
           {
             "name": "pharmacyNum",
@@ -273,16 +273,10 @@
         "tags": [
           "Likes"
         ],
-        "description": "",
+        "description": "유저 자신이 좋아요한 약국 모아보기 API",
         "parameters": [
           {
             "name": "userNum",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
             "in": "header",
             "type": "string"
           }
