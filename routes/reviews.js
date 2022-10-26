@@ -9,7 +9,8 @@ const reviewController = new ReviewController();
 
 
 router.route("/:pharmacyNum")
-// 댓글 작성 API
+    .get(reviewController.getAllReview)
+        // 댓글 작성 API
     .post(reviewController.createReview)
 
 //댓글 수정 API

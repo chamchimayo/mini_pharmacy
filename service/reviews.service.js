@@ -6,6 +6,17 @@ class ReviewService {
         this.reviewRepository = new ReviewRepository;
     }
 
+    getAllReview = async (pharmacyNum) => {
+        const option = {where:{pharmacyNum}}
+        const reviewList = await this.reviewRepository.getAllReview(option)
+
+        if (reviewList) {
+            return reviewList;
+        } else {
+            throw new Error('리뷰 목록을 불러오는 중 오류가 발생했습니다.');
+        }
+    }
+
     createReview = async ( pharmacyNum,userNum,imageUrl,review) => {
         const option = Reviews.build({pharmacyNum,userNum,imageUrl,review})
         const createReview = await this.reviewRepository.save(option);
