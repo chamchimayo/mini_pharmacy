@@ -34,11 +34,11 @@ class UserRepository {
     return users;
   }
 
-  loginUsers = async(userId,password)=>{
-    const loginUsers = await Users.findOne({
-      where:{userId,password},
+  findOneUser = async(userId)=>{
+    const findOneUser = await Users.findOne({
+      where:{userId},
     })
-    return loginUsers
+    return findOneUser;
   }
 
   updateUsers = async(userNum,nickname,password)=>{
