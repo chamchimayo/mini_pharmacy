@@ -25,15 +25,22 @@ class UserService {
     }
   };
 
+  checkDuplicatedId = async (userId) => {
+    const fineOneUser = await this.UserRepository.findOneUser(userId);
+
+    if(fineOneUser) {
+      throw new Error('이미 존재하는 ID입니다');
+    } else {
+      return;
+    }
+  }
+
   loginUsers = async (userId, password) => {
     const findOneUser = await this.UserRepository.findOneUser(userId);
-    const hashedPw = bcrypt.hashSync(password, 10);
-    const match = bcrypt.compareSync(password, hashedPw);
-    console.log("@@@@@@", findOneUser.password);
-    console.log("@@@@@@", match);
+    const match = bcrypt.compareSync(password, findOneUser.password);
 
     if (!findOneUser || !match) {
-      throw new Error("닉네임 또는 패스워드를 확인해주세요.");
+      throw new Error("아이디 또는 패스워드를 확인해주세요.");
     } else {
       return findOneUser;
     }
@@ -42,6 +49,7 @@ class UserService {
   getUsersInfo = async (userNum, userId, nickname, password, gender, age) => {
     const getUsersInfo = await this.UserRepository.getUsersInfo(
       userNum);
+
     return {
       userNum: getUsersInfo.userNum,
       userId: getUsersInfo.userId,
@@ -66,6 +74,7 @@ class UserService {
       updatedAt: User.updatedAt,
     };
   };
+
   deleteUser = async (userNum) => {
     const deleteUsers = await this.UserRepository.deleteUsers(userNum);
     return deleteUsers;

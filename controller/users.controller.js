@@ -49,11 +49,22 @@ class UsersController {
         gender,
         age
       );
-      res.status(200).send("회원가입에 성공했습니다");
+      res.status(201).send("회원가입에 성공했습니다");
     } catch (err) {
       res.json(err.message);
     }
   };
+
+  checkDuplicatedId = async (req, res, next) => {
+    const { userId } = req.body;
+    try {
+      await this.usersService.checkDuplicatedId(userId);
+
+      res.status(200).send("사용 가능한 ID입니다.");
+    } catch (err) {
+      next(err);
+    }
+  }
 
   loginUsers = async (req, res, next) => {
     const { userId, password } = req.body;
@@ -82,23 +93,20 @@ class UsersController {
   };
 
   updateUsers = async (req, res, next) => {
-    console.log("@@@@@@@@@@@@@@@here i am");
+    try{
+      const { userNum } = req.params;
+      const { nickname, password } = req.body;
 
-    // try{
-    const { userNum } = req.params;
-    console.log("@@@@@@@@@@@@@@@", userNum);
+      const userData = await this.usersService.updateUsers(
+        userNum,
+        nickname,
+        password
+      );
 
-    const { nickname, password } = req.body;
-    console.log(nickname, password);
-    const userData = await this.usersService.updateUsers(
-      userNum,
-      nickname,
-      password
-    );
-    res.status(200).json({ data: userData });
-    // }catch(err){
-    //    res.status(400).send('입력정보 오류')
-    // }
+      res.status(200).json({ data: userData });
+    }catch(err){
+       res.status(400).send('입력정보 오류')
+    }
   };
 
   deleteUsers = async (req, res, next) => {
