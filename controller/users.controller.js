@@ -86,8 +86,9 @@ class UsersController {
   };
 
   getUsersInfo = async (req, res, nex) => {
-    const { userNum } = req.params;
-    const getUser = await this.usersService.getUsersInfo(userNum);
+    const { userId } = res.locals.user;
+    console.log("@@@@@@controller", userId);
+    const getUser = await this.usersService.getUsersInfo(userId);
 
     res.status(200).json({ getUser });
   };
@@ -105,7 +106,7 @@ class UsersController {
 
       res.status(200).json({ data: userData });
     }catch(err){
-       res.status(400).send('입력정보 오류')
+      res.status(400).send('입력정보 오류');
     }
   };
 
