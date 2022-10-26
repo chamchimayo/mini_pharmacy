@@ -14,11 +14,23 @@ class ReviewsController {
     constructor() {
         this.ReviewService = new ReviewService();
     }
+    getAllReview = async (req,res, next) => {
+        try {
+            const { pharmacyNum } = req.params;
+            const reviewList = await this.ReviewService.getAllReview(pharmacyNum)
+            res.status(200).json({data:reviewList});
+        } catch (err) {
+            next(err);
+        }
+
+
+    }
+
     createReview = async (req, res, next) => {
         try {
-            // const { pharmacyNum } = req.params;
+            const { pharmacyNum } = req.params;
             // const { userNum } = res.locals.user;
-            const { pharmacyNum,userNum,imageUrl, review } = await schema.validateAsync(req.body)
+            const { userNum,imageUrl, review } = await schema.validateAsync(req.body)
 
             const createReview = await this.ReviewService.createReview(
                 pharmacyNum,
