@@ -59,7 +59,7 @@ class UsersController {
     const { userId } = req.body;
     try {
       const message = await this.usersService.checkDuplicatedId(userId);
-      console.log("@@@@@@@@@@@@@@", message);
+      console.log("11111111111", message);
       res.status(200).json({message});
     } catch (err) {
       res.status(400).json({errorMessage:err.message});
