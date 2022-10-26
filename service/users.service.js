@@ -1,62 +1,52 @@
 const UserRepository = require("../repository/users.repository");
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt");
 
 class UserService {
   UserRepository = new UserRepository();
- 
-  
-  
-  //회원가입
 
+  // 회원가입 API
   createUser = async (userId, nickname, password, confirmPw, gender, age) => {
-    
     const result = await this.UserRepository.checkUsersIdDup(userId);
-    if (result){
-      throw new Error("이미 가입된 아이디입니다.")
-     }else{
-      const hashed = await bcrypt.hash(password,10);
+    if (result) {
+      throw new Error("이미 가입된 아이디입니다.");
+    } else {
+      const hashedPw = bcrypt.hashSync(password, 10);
 
-    const createUserData = await this.UserRepository.createUser(
-      userId,
-      nickname,
-      hashed,
-      confirmPw,
-      gender,
-      age
-    );
-    
+      await this.UserRepository.createUser(
+        userId,
+        nickname,
+        hashedPw,
+        confirmPw,
+        gender,
+        age
+      );
 
-
-    return;
-     }
+      return;
+    }
   };
-  
-  
-
 
   loginUsers = async (userId, password) => {
-    const loginUsers = await this.UserRepository.loginUsers(userId, password);
+    const findOneUser = await this.UserRepository.findOneUser(userId);
+    const hashedPw = bcrypt.hashSync(password, 10);
+    const match = bcrypt.compareSync(password, hashedPw);
+    console.log("@@@@@@", findOneUser.password);
+    console.log("@@@@@@", match);
 
-    if (!loginUsers || password !== loginUsers.password) {
+    if (!findOneUser || !match) {
       throw new Error("닉네임 또는 패스워드를 확인해주세요.");
+    } else {
+      return findOneUser;
     }
-    return loginUsers;
   };
 
   getUsersInfo = async (userNum, userId, nickname, password, gender, age) => {
     const getUsersInfo = await this.UserRepository.getUsersInfo(
-      userNum
-      //  userId,
-      //  nickname,
-      //  password,
-      //  gender,
-      //  age
-    );
+      userNum);
     return {
       userNum: getUsersInfo.userNum,
       userId: getUsersInfo.userId,
       nickname: getUsersInfo.nickname,
-      // password: getUsersInfo.password,
+      password: getUsersInfo.password,
       gender: getUsersInfo.gender,
       age: getUsersInfo.age,
     };
@@ -81,6 +71,5 @@ class UserService {
     return deleteUsers;
   };
 }
-
 
 module.exports = UserService;
