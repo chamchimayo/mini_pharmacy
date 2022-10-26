@@ -58,11 +58,11 @@ class UsersController {
   checkDuplicatedId = async (req, res, next) => {
     const { userId } = req.body;
     try {
-      await this.usersService.checkDuplicatedId(userId);
-
-      res.status(200).send("사용 가능한 ID입니다.");
+      const message = await this.usersService.checkDuplicatedId(userId);
+      console.log("@@@@@@@@@@@@@@", message);
+      res.status(200).send(message);
     } catch (err) {
-      next(err);
+      res.send("중복 확인 실패")
     }
   }
 
