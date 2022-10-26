@@ -22,8 +22,6 @@ class UserRepository {
     return createUserData
   };
 
-
-
   getUsersInfo = async(userNum)=>{
     const users = await Users.findByPk(userNum);
     if(users.gender === 0) {
