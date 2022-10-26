@@ -30,13 +30,13 @@ class PharmacyService {
     return response;
   };
   
-  findOne = async (HPID, serviceKey) => {
+  findOne = async (HPID) => {
     let response = null;
     try {
       response = await axios.get(pharmacyDetailUrl, {
         params: {
           HPID: HPID, // 해당 약국 정보
-          servicekey: serviceKey,
+          servicekey: SERVICE_KEY,
           pageNo: 1, // 페이지 갯수
           numOfRows: 10, // 페이지에 띄울 최대 갯수
         },
