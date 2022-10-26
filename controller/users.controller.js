@@ -62,7 +62,7 @@ class UsersController {
       console.log("@@@@@@@@@@@@@@", message);
       res.status(200).json({message});
     } catch (err) {
-      res.json(err.message);
+      res.status(400).json({errorMessage:err.message});
     }
   }
 
