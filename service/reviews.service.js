@@ -10,7 +10,7 @@ class ReviewService {
         const option = {where:{pharmacyNum}}
         const reviewList = await this.reviewRepository.getAllReview(option)
 
-        if (reviewList) {
+        if (reviewList.length) {
             return reviewList;
         } else {
             throw new Error('리뷰 목록을 불러오는 중 오류가 발생했습니다.');
