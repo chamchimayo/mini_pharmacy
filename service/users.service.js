@@ -2,17 +2,17 @@ const UserRepository = require("../repository/users.repository");
 const bcrypt = require("bcrypt");
 
 class UserService {
-  UserRepository = new UserRepository();
+  userRepository = new UserRepository();
 
   // 회원가입 API
   createUser = async (userId, nickname, password, confirmPw, gender, age) => {
-    const result = await this.UserRepository.checkUsersIdDup(userId);
+    const result = await this.userRepository.checkUsersIdDup(userId);
     if (result) {
       throw new Error("이미 가입된 아이디입니다.");
     } else {
       const hashedPw = bcrypt.hashSync(password, 10);
 
-      await this.UserRepository.createUser(
+      await this.userRepository.createUser(
         userId,
         nickname,
         hashedPw,
@@ -26,8 +26,9 @@ class UserService {
   };
 
   checkDuplicatedId = async (userId) => {
-    const fineOneUser = await this.UserRepository.findOneUser(userId);
-    console.log(fineOneUser)
+
+    const fineOneUser = await this.userRepository.findOneUser(userId);
+
 
     if(fineOneUser) {
       throw new Error('이미 존재하는 ID입니다');
@@ -37,7 +38,7 @@ class UserService {
   }
 
   loginUsers = async (userId, password) => {
-    const findOneUser = await this.UserRepository.findOneUser(userId);
+    const findOneUser = await this.userRepository.findOneUser(userId);
     const match = bcrypt.compareSync(password, findOneUser.password);
 
     if (!findOneUser || !match) {
@@ -47,9 +48,11 @@ class UserService {
     }
   };
 
-  getUsersInfo = async (userNum, userId, nickname, password, gender, age) => {
-    const getUsersInfo = await this.UserRepository.getUsersInfo(
-      userNum);
+  getUsersInfo = async (userId) => {
+    const findOneUserById = await this.userRepository.findOneUser(userId);
+    console.log("@@@@@@@@@@@service:findOneUserById", findOneUserById);
+    const getUsersInfo = await this.userRepository.getUsersInfo(
+      findOneUserById.userNum);
 
     return {
       userNum: getUsersInfo.userNum,
@@ -62,7 +65,7 @@ class UserService {
   };
 
   updateUsers = async (userNum, nickname, password) => {
-    const User = await this.UserRepository.updateUsers(
+    const User = await this.userRepository.updateUsers(
       userNum,
       nickname,
       password
@@ -77,7 +80,7 @@ class UserService {
   };
 
   deleteUser = async (userNum) => {
-    const deleteUsers = await this.UserRepository.deleteUsers(userNum);
+    const deleteUsers = await this.userRepository.deleteUsers(userNum);
     return deleteUsers;
   };
 }

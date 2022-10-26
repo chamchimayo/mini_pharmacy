@@ -8,7 +8,7 @@ const usersController = new UsersController();
 router.post("/signup", usersController.createUsers);
 router.post("/login", usersController.loginUsers);
 router.post("/checkDuplicatedId", usersController.checkDuplicatedId);
-router.get("/:userNum", authMiddleware, usersController.getUsersInfo);
+router.get("/", authMiddleware, usersController.getUsersInfo);
 router.put("/:userNum",authMiddleware, usersController.updateUsers);
 router.delete("/:userNum",authMiddleware, usersController.deleteUsers);
 
