@@ -29,9 +29,9 @@ class UserService {
     const fineOneUser = await this.UserRepository.findOneUser(userId);
 
     if(fineOneUser) {
-      throw new Error('이미 존재하는 ID입니다');
+      return '이미 존재하는 ID입니다';
     } else {
-      return;
+      return '사용 가능한 ID입니다';
     }
   }
 
