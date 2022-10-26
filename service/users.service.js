@@ -1,62 +1,60 @@
 const UserRepository = require("../repository/users.repository");
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt");
 
 class UserService {
   UserRepository = new UserRepository();
- 
-  
-  
-  //회원가입
 
+  // 회원가입 API
   createUser = async (userId, nickname, password, confirmPw, gender, age) => {
-    
     const result = await this.UserRepository.checkUsersIdDup(userId);
-    if (result){
-      throw new Error("이미 가입된 아이디입니다.")
-     }else{
-      const hashed = await bcrypt.hash(password,10);
+    if (result) {
+      throw new Error("이미 가입된 아이디입니다.");
+    } else {
+      const hashedPw = bcrypt.hashSync(password, 10);
 
-    const createUserData = await this.UserRepository.createUser(
-      userId,
-      nickname,
-      hashed,
-      confirmPw,
-      gender,
-      age
-    );
-    
+      await this.UserRepository.createUser(
+        userId,
+        nickname,
+        hashedPw,
+        confirmPw,
+        gender,
+        age
+      );
 
-
-    return;
-     }
+      return;
+    }
   };
-  
-  
 
+  checkDuplicatedId = async (userId) => {
+    const fineOneUser = await this.UserRepository.findOneUser(userId);
+
+    if(fineOneUser) {
+      throw new Error('이미 존재하는 ID입니다');
+    } else {
+      return;
+    }
+  }
 
   loginUsers = async (userId, password) => {
-    const loginUsers = await this.UserRepository.loginUsers(userId, password);
+    const findOneUser = await this.UserRepository.findOneUser(userId);
+    const match = bcrypt.compareSync(password, findOneUser.password);
 
-    if (!loginUsers || password !== loginUsers.password) {
-      throw new Error("닉네임 또는 패스워드를 확인해주세요.");
+    if (!findOneUser || !match) {
+      throw new Error("아이디 또는 패스워드를 확인해주세요.");
+    } else {
+      return findOneUser;
     }
-    return loginUsers;
   };
 
   getUsersInfo = async (userNum, userId, nickname, password, gender, age) => {
     const getUsersInfo = await this.UserRepository.getUsersInfo(
-      userNum
-      //  userId,
-      //  nickname,
-      //  password,
-      //  gender,
-      //  age
-    );
+      userNum);
+
     return {
       userNum: getUsersInfo.userNum,
       userId: getUsersInfo.userId,
       nickname: getUsersInfo.nickname,
-      // password: getUsersInfo.password,
+      password: getUsersInfo.password,
       gender: getUsersInfo.gender,
       age: getUsersInfo.age,
     };
@@ -76,11 +74,11 @@ class UserService {
       updatedAt: User.updatedAt,
     };
   };
+
   deleteUser = async (userNum) => {
     const deleteUsers = await this.UserRepository.deleteUsers(userNum);
     return deleteUsers;
   };
 }
-
 
 module.exports = UserService;

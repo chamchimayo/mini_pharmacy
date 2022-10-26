@@ -5,6 +5,10 @@ class ReviewRepository {
         this.Reviews = Reviews;
     }
 
+    getAllReview = async (option) => {
+        return await this.Reviews.findAll(option)
+    }
+
     save = async (option) => { // 인자를 넘길때 서비스단에서 가공해서 간단하게 넘겨주는게 좋다
         
         return await option.save();

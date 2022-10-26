@@ -1,7 +1,6 @@
 const ReviewService = require('../service/reviews.service');
 const Joi = require('joi');
 
-
 //  유효성 검사
 const schema = Joi.object().keys({
     pharmacyNum:Joi.string().min(1),
@@ -14,11 +13,21 @@ class ReviewsController {
     constructor() {
         this.ReviewService = new ReviewService();
     }
+    getAllReview = async (req,res, next) => {
+        try {
+            const { pharmacyNum } = req.params;
+            const reviewList = await this.ReviewService.getAllReview(pharmacyNum)
+            res.status(200).json({data:reviewList});
+        } catch (err) {
+            next(err);
+        }
+    }
+
     createReview = async (req, res, next) => {
         try {
-            // const { pharmacyNum } = req.params;
+            const { pharmacyNum } = req.params;
             // const { userNum } = res.locals.user;
-            const { pharmacyNum,userNum,imageUrl, review } = await schema.validateAsync(req.body)
+            const { userNum,imageUrl, review } = await schema.validateAsync(req.body)
 
             const createReview = await this.ReviewService.createReview(
                 pharmacyNum,
@@ -37,7 +46,7 @@ class ReviewsController {
         try {
             const { reviewNum } = req.params;
             // const { userNum } = res.locals.user;
-            const {userNum, review } = await schema.validateAsync(req.body)          
+            const { userNum, review } = await schema.validateAsync(req.body)          
 
             const updateReview = await this.ReviewService.updateReview(
                 reviewNum,
