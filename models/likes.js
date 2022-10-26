@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       // Likes.belongsTo(models.PharmacyLikes, {
       //   foreignKey: "pharmacyNum",
-      //   targetKey:"pharmacyNum",
+      //   targetKey: "pharmacyNum",
       // });
   }
 }

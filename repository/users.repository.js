@@ -5,6 +5,10 @@ class UserRepository {
     this.Users = Users;
   }
 
+  checkUsersIdDup = async (userId) => {
+    return await Users.findOne({ where: { userId } });
+  };
+
   createUser = async (userId, nickname, password, confirmPw,gender,age) => {
     const createUserData = await this.Users.create({
       userId,
@@ -18,8 +22,15 @@ class UserRepository {
     return createUserData
   };
 
+
+
   getUsersInfo = async(userNum)=>{
     const users = await Users.findByPk(userNum);
+    if(users.gender === 0) {
+      users.gender = '남';
+    } else if(users.gender === 1) {
+      users.gender = '여';
+    }
     return users;
   }
 
@@ -33,8 +44,7 @@ class UserRepository {
   updateUsers = async(userNum,nickname,password)=>{
     const updateUser = await Users.update({nickname,password},{where:{userNum}})
 
-      return updateUser
-     
+    return updateUser
   }
 
   deleteUsers = async(userNum)=>{

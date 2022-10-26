@@ -5,7 +5,7 @@ class PharmacyController {
     this.pharmacyService = new PharmacyService();
   }
 
-  getPharmacyList = async (req, res) => {
+  getPharmacyList = async (req, res, next) => {
     try {
       const { Q0, Q1, QT, QN, ORD, pageNo, numOfRows } = req.query;
 
@@ -29,13 +29,15 @@ class PharmacyController {
   getPharmacyOne = async (req, res) => {
     try {
       const { pharmacyNum } = req.params;
-
-      let pharmacy = await this.pharmacyService.findOne(pharmacyNum);
-
+      const { serviceKey } = req.query;
+      console.log(pharmacyNum);
+      console.log(serviceKey);
+      let pharmacy = await this.pharmacyService.findOne(pharmacyNum, serviceKey);
+      console.log("@@@@@@@@", pharmacy.data.response);
       res.setHeader("Access-Control-Allow-Origin", "*");
       res.json(pharmacy.data.response.body.items);
     } catch (err) {
-      next(err);
+      res.send(err);
     }
   };
 }
