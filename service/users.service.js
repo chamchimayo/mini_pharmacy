@@ -26,10 +26,12 @@ class UserService {
   };
 
   checkDuplicatedId = async (userId) => {
+
     const fineOneUser = await this.userRepository.findOneUser(userId);
 
+
     if(fineOneUser) {
-      return '이미 존재하는 ID입니다';
+      throw new Error('이미 존재하는 ID입니다');
     } else {
       return '사용 가능한 ID입니다';
     }
