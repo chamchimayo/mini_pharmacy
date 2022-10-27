@@ -21,7 +21,7 @@ class UsersController {
     try {
       await userSchema.validateAsync(req.body);
       if (req.headers.authorization) {
-        res.status(400).send("로그인이 이미 되어있습니다");
+        res.status(400).json({errorMessage:"로그인이 이미 되어있습니다"});
         return;
       }
 
@@ -29,13 +29,13 @@ class UsersController {
       if (password.search(userId) > -1) {
         res
           .status(400)
-          .send({ errorMessage: "비밀번호에 닉네임이 포함되어있습니다." });
+          .json({ errorMessage: "비밀번호에 닉네임이 포함되어있습니다." });
         return;
       }
       if (password !== confirmPw) {
         res
           .status(400)
-          .send({
+          .json({
             errorMessage: "비밀번호가 비밀번호 확인란과 일치하지 않습니다.",
           });
         return;
@@ -49,7 +49,7 @@ class UsersController {
         gender,
         age
       );
-      res.status(201).send("회원가입에 성공했습니다");
+      res.status(201).json({message:"회원가입에 성공했습니다"});
     } catch (err) {
       res.json(err.message);
     }
@@ -59,7 +59,7 @@ class UsersController {
     const { userId } = req.body;
     try {
       const message = await this.usersService.checkDuplicatedId(userId);
-      console.log("11111111111", message);
+
       res.status(200).json({message});
     } catch (err) {
       res.status(400).json({errorMessage:err.message});
@@ -69,7 +69,7 @@ class UsersController {
   loginUsers = async (req, res, next) => {
     const { userId, password } = req.body;
     if (req.headers.authorization) {
-      res.status(400).send("이미 로그인이 되어있습니다.");
+      res.status(400).json({errorMessage:"이미 로그인이 되어있습니다."});
       return;
     }
 
@@ -87,36 +87,38 @@ class UsersController {
 
   getUsersInfo = async (req, res, nex) => {
     const { userId } = res.locals.user;
-    console.log("@@@@@@controller", userId);
     const getUser = await this.usersService.getUsersInfo(userId);
 
     res.status(200).json({ getUser });
   };
 
-  updateUsers = async (req, res, next) => {
+  updateUser = async (req, res, next) => {
     try{
-      const { userNum } = req.params;
-      const { nickname, password } = req.body;
-
-      const userData = await this.usersService.updateUsers(
+      const { userId } = req.params;
+      const { userNum } = res.locals.user;
+      const { nickname } = req.body;
+  
+      const userData = await this.usersService.updateUser(
         userNum,
-        nickname,
-        password
+        userId,
+        nickname
       );
 
       res.status(200).json({ data: userData });
     }catch(err){
-      res.status(400).send('입력정보 오류');
+      res.status(400).json({errorMessage:err.message});
     }
   };
 
-  deleteUsers = async (req, res, next) => {
+  deleteUser = async (req, res, next) => {
     try {
-      const { userId, password } = req.body;
-      await this.usersService.deleteUsers(userId, password);
-      res.status(200).json("회원정보 삭제완료");
+      const { userId } = req.params;
+      const { userNum } = res.locals.user;
+
+      const deleteUser = await this.usersService.deleteUser(userNum,userId);
+      res.status(200).json({message:deleteUser});
     } catch (err) {
-      res.status(400).send("입력정보 오류");
+      res.status(400).json({errormessage:err.message});
     }
   };
 }

@@ -9,7 +9,7 @@ router.post("/signup", usersController.createUsers);
 router.post("/login", usersController.loginUsers);
 router.post("/checkDuplicatedId", usersController.checkDuplicatedId);
 router.get("/", authMiddleware, usersController.getUsersInfo);
-router.put("/:userNum",authMiddleware, usersController.updateUsers);
-router.delete("/:userNum",authMiddleware, usersController.deleteUsers);
+router.put("/:userId",authMiddleware, usersController.updateUser);
+router.delete("/:userId",authMiddleware, usersController.deleteUser);
 
 module.exports = router;
