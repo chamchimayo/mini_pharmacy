@@ -1,7 +1,7 @@
 const { Users } = require("../models");
 
 class UserRepository {
-  constructor(){
+  constructor() {
     this.Users = Users;
   }
 
@@ -9,46 +9,49 @@ class UserRepository {
     return await Users.findOne({ where: { userId } });
   };
 
-  createUser = async (userId, nickname, password, confirmPw,gender,age) => {
+  createUser = async (userId, nickname, password, confirmPw, gender, age) => {
     const createUserData = await this.Users.create({
       userId,
       nickname,
       password,
       confirmPw,
       gender,
-      age
+      age,
     });
 
-    return createUserData
+    return createUserData;
   };
 
-  getUsersInfo = async(userNum)=>{
+  getUsersInfo = async (userNum) => {
     const users = await Users.findByPk(userNum);
-    if(users.gender === 0) {
-      users.gender = '남';
-    } else if(users.gender === 1) {
-      users.gender = '여';
+    if (users.gender === 0) {
+      users.gender = "남";
+    } else if (users.gender === 1) {
+      users.gender = "여";
     }
     return users;
-  }
+  };
 
-  findOneUser = async(userId)=>{
+  findOneUser = async (userId) => {
     const findOneUser = await Users.findOne({
-      where:{userId},
-    })
+      where: { userId },
+    });
     return findOneUser;
-  }
+  };
 
-  updateUsers = async(userNum,nickname,password)=>{
-    const updateUser = await Users.update({nickname,password},{where:{userNum}})
+  updateUsers = async (userNum, nickname, password) => {
+    const updateUser = await Users.update(
+      { nickname, password },
+      { where: { userNum } }
+    );
 
-    return updateUser
-  }
+    return updateUser;
+  };
 
-  deleteUsers = async(userNum)=>{
-    const deleteUser = await Users.destroy({where:{userNum}})
-    return deleteUser
-  }
+  deleteUsers = async (userNum) => {
+    const deleteUser = await Users.destroy({ where: { userNum } });
+    return deleteUser;
+  };
 }
 
 module.exports = UserRepository;
