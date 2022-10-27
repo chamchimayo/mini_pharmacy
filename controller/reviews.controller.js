@@ -26,8 +26,8 @@ class ReviewsController {
     createReview = async (req, res, next) => {
         try {
             const { pharmacyNum } = req.params;
-            // const { userNum } = res.locals.user;
-            const { userNum,imageUrl, review } = await schema.validateAsync(req.body)
+            const { userNum } = res.locals.user;
+            const { imageUrl, review } = await schema.validateAsync(req.body)
 
             const createReview = await this.ReviewService.createReview(
                 pharmacyNum,
@@ -45,8 +45,8 @@ class ReviewsController {
     updateReview = async (req, res, next) => {
         try {
             const { reviewNum } = req.params;
-            // const { userNum } = res.locals.user;
-            const { userNum, review } = await schema.validateAsync(req.body)          
+            const { userNum } = res.locals.user;
+            const { review } = await schema.validateAsync(req.body)          
 
             const updateReview = await this.ReviewService.updateReview(
                 reviewNum,
@@ -63,8 +63,7 @@ class ReviewsController {
     deleteReview = async (req, res, next) => {
         try {
             const { reviewNum } = req.params;
-            // const { userNum } = res.locals.user;
-            const { userNum } = req.body;
+            const { userNum } = res.locals.user;
 
             const deleteReview = await this.ReviewService.deleteReview(
                 reviewNum,

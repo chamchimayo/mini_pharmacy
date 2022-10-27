@@ -33,9 +33,9 @@ class ReviewService {
         const [updateReview] = await this.reviewRepository.update(reviewNum,userNum,review);
 
         if (updateReview) {
-            return '댓글 수정이 완료';
+            return '댓글 수정 완료';
         } else {
-            throw new Error('댓글 수정 권한이 없으시군요 댓글이없거나');
+            throw new Error('수정 권한이 없습니다');
         }
     };
 
@@ -44,9 +44,9 @@ class ReviewService {
         const option = {where: {reviewNum,userNum}}
         const deleteReview = await this.reviewRepository.destroy(option);
         if (deleteReview) {
-            return '댓글 파괴 완료;;';
+            return '댓글 삭제 완료';
         } else {
-            throw new Error('댓글 수정 권한이 없으시군요 댓글이없거나');
+            throw new Error('권한이없거나 이미 삭제된 댓글입니다');
         }
     };
 }

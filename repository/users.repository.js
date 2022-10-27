@@ -39,19 +39,18 @@ class UserRepository {
     return findOneUser;
   };
 
-  updateUsers = async (userNum, nickname, password) => {
-    const updateUser = await Users.update(
-      { nickname, password },
-      { where: { userNum } }
-    );
+
+  updateUser = async(userNum,userId,nickname)=>{
+    const updateUser = await Users.update({nickname},{where:{userNum,userId}})
 
     return updateUser;
   };
 
-  deleteUsers = async (userNum) => {
-    const deleteUser = await Users.destroy({ where: { userNum } });
-    return deleteUser;
-  };
-}
 
+  deleteUser = async(userNum,userId)=>{
+    const deleteUser = await Users.destroy({where:{userNum,userId}})
+    return deleteUser
+  }
+
+}
 module.exports = UserRepository;
