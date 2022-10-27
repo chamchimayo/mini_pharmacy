@@ -39,18 +39,26 @@ class UserService {
 
   loginUsers = async (userId, password) => {
     const findOneUser = await this.userRepository.findOneUser(userId);
-    const match = bcrypt.compareSync(password, findOneUser.password);
+    if(findOneUser){
+      const match = bcrypt.compareSync(password, findOneUser.password);
 
-    if (!findOneUser || !match) {
-      throw new Error("아이디 또는 패스워드를 확인해주세요.");
+      if (!match) {
+        throw new Error("아이디 또는 패스워드를 확인해주세요.");
+      } else {
+        return findOneUser;
+      }
     } else {
-      return findOneUser;
+      throw new Error("아이디 또는 패스워드를 다시 확인해주세요.");
     }
   };
 
+    
+
+
+    
+
   getUsersInfo = async (userId) => {
     const findOneUserById = await this.userRepository.findOneUser(userId);
-    console.log("@@@@@@@@@@@service:findOneUserById", findOneUserById);
     const getUsersInfo = await this.userRepository.getUsersInfo(
       findOneUserById.userNum);
 
@@ -64,24 +72,45 @@ class UserService {
     };
   };
 
-  updateUsers = async (userNum, nickname, password) => {
-    const User = await this.userRepository.updateUsers(
-      userNum,
-      nickname,
-      password
-    );
-    return {
-      userNum: User.null,
-      nickname: User.nickname,
-      password: User.password,
-      createdAt: User.createdAt,
-      updatedAt: User.updatedAt,
-    };
+  updateUser = async (userNum,userId,nickname) => {
+
+    const findOneUserById = await this.userRepository.findOneUser(userId);
+    if(findOneUserById){
+      if(findOneUserById.userNum === userNum) {
+        const [User] = await this.userRepository.updateUser(
+          userNum,
+            userId,
+            nickname
+        );
+        if(User){
+          return "닉네임 수정 완료";
+        } else {
+          throw new Error("에러로 인해 수정 실패")
+        }        
+      } else {
+        throw new Error("수정 권한이 없습니다")
+      }
+    } else {
+      throw new Error("권한이 없습니다")
+    }  
   };
 
-  deleteUser = async (userNum) => {
-    const deleteUsers = await this.userRepository.deleteUsers(userNum);
-    return deleteUsers;
+  deleteUser = async (userNum,userId) => {
+    const findOneUserById = await this.userRepository.findOneUser(userId);
+    if(findOneUserById) {
+      if(findOneUserById.userNum === userNum){
+        const deleteUsers = await this.userRepository.deleteUser(userNum,userId);
+        if(deleteUsers){
+          return "회원탈퇴를 완료 하였습니다"
+        } else {
+          throw new Error("에러로 인해 삭제 실패")
+        }
+      } else {
+        throw new Error("삭제 권한이 없습니다")
+      }
+    } else {
+      throw new Error("권한이 없습니다")
+    }
   };
 }
 
