@@ -1,0 +1,295 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "주말 약국",
+    "description": "주말 약국(항해99 9기 E반 미니 프로젝트)의 API 명세서입니다.",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/users/signup": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "회원 가입 API",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "아이디"
+                },
+                "nickname": {
+                  "example": "닉네임"
+                },
+                "password": {
+                  "example": "비밀번호"
+                },
+                "confirmPw": {
+                  "example": "비밀번호 확인"
+                },
+                "gender": {
+                  "example": "성별"
+                },
+                "age": {
+                  "example": "나이"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "회원가입에 성공했습니다"
+          },
+          "400": {
+            "description": "회원가입에 실패했습니다"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "로그인 API",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "아이디"
+                },
+                "password": {
+                  "example": "비밀번호"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "로그인에 성공했습니다"
+          },
+          "400": {
+            "description": "로그인에 실패했습니다"
+          }
+        }
+      }
+    },
+    "/users/{userNum}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "회원 자신의 정보 보기 API",
+        "parameters": [
+          {
+            "name": "userNum",
+            "in": "header",
+            "type": "number",
+            "description": "유저 번호"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "description": "회원 정보 변경 API",
+        "parameters": [
+          {
+            "name": "userNum",
+            "in": "header",
+            "type": "number",
+            "description": "유저 번호"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "description": "회원 탈퇴 API",
+        "parameters": [
+          {
+            "name": "userNum",
+            "in": "header",
+            "type": "number",
+            "description": "유저 번호"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/pharmacyList/": {
+      "get": {
+        "tags": [
+          "Pharmacy"
+        ],
+        "description": "현위치 기준 근처 약국 전체 조회 API",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Q0": {
+                  "example": "시도"
+                },
+                "Q1": {
+                  "example": "구군"
+                },
+                "QT": {
+                  "example": "월~일요일(1~7), 공휴일(8)"
+                },
+                "QN": {
+                  "example": "기관명"
+                },
+                "ORD": {
+                  "example": "순서"
+                },
+                "pageNo": {
+                  "example": "페이지 번호"
+                },
+                "numOfRows": {
+                  "example": "목록 건수"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/pharmacyList/{pharmacyNum}": {
+      "get": {
+        "tags": [
+          "Pharmacy"
+        ],
+        "description": "약국 상세 조회 API",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/reviews/{pharmacyNum}": {
+      "post": {
+        "tags": [
+          "Reviews"
+        ],
+        "description": "약국 리뷰 남기기 API",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "patch": {
+      "tags": [
+        "Reviews"
+      ],
+      "description": "약국 리뷰 수정 API",
+      "parameters": [],
+      "responses": {}
+    },
+    "/reviews/{reviewNum}": {
+      "delete": {
+        "tags": [
+          "Reviews"
+        ],
+        "description": "약국 리뷰 삭제 API",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/likes/{pharmacyNum}": {
+      "put": {
+        "tags": [
+          "Likes"
+        ],
+        "description": "약국 좋아요 API",
+        "parameters": [
+          {
+            "name": "pharmacyNum",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/likes/{userNum}": {
+      "get": {
+        "tags": [
+          "Likes"
+        ],
+        "description": "유저 자신이 좋아요한 약국 모아보기 API",
+        "parameters": [
+          {
+            "name": "userNum",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  }
+}

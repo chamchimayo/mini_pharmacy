@@ -6,8 +6,9 @@ const UsersController = require("../controller/users.controller");
 const usersController = new UsersController();
 
 router.post("/signup", usersController.createUsers);
-router.get("/:userNum", authMiddleware, usersController.getUsersInfo);
 router.post("/login", usersController.loginUsers);
+router.post("/checkDuplicatedId", usersController.checkDuplicatedId);
+router.get("/", authMiddleware, usersController.getUsersInfo);
 router.put("/:userNum",authMiddleware, usersController.updateUsers);
 router.delete("/:userNum",authMiddleware, usersController.deleteUsers);
 

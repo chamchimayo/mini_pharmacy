@@ -4,47 +4,43 @@ dotenv.config(`${process.env.COOKIE_NAME}`);
 const UsersService = require("../service/users.service");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
-const { json } = require("sequelize");
 
-
-
-
-
-
-const userSchema = Joi.object
-    ({
-    userId: Joi.string().alphanum().required(),
-    nickname: Joi.string().alphanum().required(),
-    password: Joi.string().disallow("userId").required(),    
-    confirmPw: Joi.ref("password"),
-    gender:Joi.number().required(),
-    age:Joi.number().required()
-    });
-
-    
+const userSchema = Joi.object({
+  userId: Joi.string().alphanum().required(),
+  nickname: Joi.string().required(),
+  password: Joi.string().disallow("userId").required(),
+  confirmPw: Joi.ref("password"),
+  gender: Joi.number().required(),
+  age: Joi.number().required(),
+});
 
 class UsersController {
   usersService = new UsersService();
 
-  createUsers = async (req, res, next) => {    
-
-    try{
+  createUsers = async (req, res, next) => {
+    try {
       await userSchema.validateAsync(req.body);
       if (req.headers.authorization) {
         res.status(400).send("로그인이 이미 되어있습니다");
         return;
       }
-      
+
       const { userId, nickname, password, confirmPw, gender, age } = req.body;
-      if (password.search(userId) > -1) { 
-        res.status(400).send({ errorMessage: "비밀번호에 닉네임이 포함되어있습니다." }) 
-        return
+      if (password.search(userId) > -1) {
+        res
+          .status(400)
+          .send({ errorMessage: "비밀번호에 닉네임이 포함되어있습니다." });
+        return;
       }
-      if(password!==confirmPw){
-        res.status(400).send({ errorMessage: "비밀번호가 비밀번호 확인란과 일치하지 않습니다."})    
-        return;       
-      }    
-            
+      if (password !== confirmPw) {
+        res
+          .status(400)
+          .send({
+            errorMessage: "비밀번호가 비밀번호 확인란과 일치하지 않습니다.",
+          });
+        return;
+      }
+
       const result = await this.usersService.createUser(
         userId,
         nickname,
@@ -53,20 +49,23 @@ class UsersController {
         gender,
         age
       );
-      res.status(200).send("회원가입에 성공했습니다");
-  
-    }  catch (err) {
+      res.status(201).send("회원가입에 성공했습니다");
+    } catch (err) {
       res.json(err.message);
-     }
-    
-     
+    }
+  };
 
-    };
+  checkDuplicatedId = async (req, res, next) => {
+    const { userId } = req.body;
+    try {
+      const message = await this.usersService.checkDuplicatedId(userId);
+      console.log("11111111111", message);
+      res.status(200).json({message});
+    } catch (err) {
+      res.status(400).json({errorMessage:err.message});
+    }
+  }
 
-   
-      
-    
-    
   loginUsers = async (req, res, next) => {
     const { userId, password } = req.body;
     if (req.headers.authorization) {
@@ -87,30 +86,28 @@ class UsersController {
   };
 
   getUsersInfo = async (req, res, nex) => {
-    const { userNum } = req.params;
-    const getUser = await this.usersService.getUsersInfo(userNum);
+    const { userId } = res.locals.user;
+    console.log("@@@@@@controller", userId);
+    const getUser = await this.usersService.getUsersInfo(userId);
 
     res.status(200).json({ getUser });
   };
 
   updateUsers = async (req, res, next) => {
-    console.log("@@@@@@@@@@@@@@@here i am");
+    try{
+      const { userNum } = req.params;
+      const { nickname, password } = req.body;
 
-    // try{
-    const { userNum } = req.params;
-    console.log("@@@@@@@@@@@@@@@", userNum);
+      const userData = await this.usersService.updateUsers(
+        userNum,
+        nickname,
+        password
+      );
 
-    const { nickname, password } = req.body;
-    console.log(nickname, password);
-    const userData = await this.usersService.updateUsers(
-      userNum,
-      nickname,
-      password
-    );
-    res.status(200).json({ data: userData });
-    // }catch(err){
-    //    res.status(400).send('입력정보 오류')
-    // }
+      res.status(200).json({ data: userData });
+    }catch(err){
+      res.status(400).send('입력정보 오류');
+    }
   };
 
   deleteUsers = async (req, res, next) => {

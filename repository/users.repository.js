@@ -24,14 +24,19 @@ class UserRepository {
 
   getUsersInfo = async (userNum) => {
     const users = await Users.findByPk(userNum);
+    if (users.gender === 0) {
+      users.gender = "남";
+    } else if (users.gender === 1) {
+      users.gender = "여";
+    }
     return users;
   };
 
-  loginUsers = async (userId, password) => {
-    const loginUsers = await Users.findOne({
-      where: { userId, password },
+  findOneUser = async (userId) => {
+    const findOneUser = await Users.findOne({
+      where: { userId },
     });
-    return loginUsers;
+    return findOneUser;
   };
 
   updateUsers = async (userNum, nickname, password) => {
