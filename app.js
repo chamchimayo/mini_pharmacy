@@ -12,12 +12,15 @@ const routes = require("./routes");
 const errorHandlerMiddleware = require('./middlewares/error-handler-middleware')
 const swaggerUi = require("swagger-ui-express");
 const swaggerFile = require("./swagger-output");
+const logger = require("morgan");
 
 app.use(cors({
   origin: '*',
 }));
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+app.use(logger('dev'));
+// app.use(logger(":method :url :status :res[content-length] - :response-time ms :date"));
 
 app.use(express.static("public_html"));
 app.use(express.json());

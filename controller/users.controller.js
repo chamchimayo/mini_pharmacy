@@ -51,7 +51,7 @@ class UsersController {
       );
       res.status(201).send("회원가입에 성공했습니다");
     } catch (err) {
-      res.json(err.message);
+      res.status(400).json(err.message);
     }
   };
 
